@@ -1,0 +1,13 @@
+{{ define "title" }}Add Event{{ end }}
+
+{{ define "content" }}
+
+<h2>Add Event</h2>
+
+<form action="." method="POST">
+        <p>Name: <input type="text" name="name"></p>
+        <p>Description: <textarea name="description" rows="10" cols="40"></textarea></p>
+        <p><button>Add</button></p>
+</form>
+
+{{ end }}
