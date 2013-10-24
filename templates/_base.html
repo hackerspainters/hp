@@ -1,14 +1,127 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+
+	    <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="HandheldFriendly" content="True">
+		<meta name="MobileOptimized" content="320">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <meta name="generator" content="golang blog" />
+
+		<link rel="stylesheet" type="text/css" href="/static/css/style.css" />
+		<link href='http://fonts.googleapis.com/css?family=Abril+Fatface' rel='stylesheet' type='text/css'>
+		<link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,900,300italic,400italic,600italic,700italic,900italic" rel="stylesheet" type="text/css">
+		<link rel="stylesheet" href="/static/font-awesome/css/font-awesome.min.css">
+		<!--[if IE 7]>
+		<link rel="stylesheet" href="/static/font-awesome/css/font-awesome-ie7.min.css">
+		<![endif]-->
+		<!--[if lt IE 9]>
+		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+		
         <title>{{ template "title" . }}</title>
     </head>
-    <body>
-        <section id="contents">
-            {{ template "content" . }}
-        </section>
-        <footer id="footer">
-            Hackers and Painters is a community project for designers and developers.
-        </footer>
+
+    <body class="home-template">
+		<div id="wrapper">
+
+			<aside id="sidebar" role="complementary" style="background-image: url(/static/img/blog_cover-1.jpg)">
+				<div class="blog-logo">
+
+					<!--<a href="/" title="mots."><img src="/static/img/logo_mots.png" alt="mots." /></a>-->
+
+				</div>
+
+				<div class="blog-description"><p>Lightning Knowledge Sharing @ Lunch</p></div>
+
+				<div class="blog-social">
+					<p>Follow Hackers and Painters.</p>
+					<ul class="clearfix">
+						<li>
+							<a href="https://www.facebook.com/groups/hackerspainters" target="_blank">
+							<span class="icon-stack">
+							<i class="icon-circle icon-stack-base"></i>
+							<i class="icon-facebook icon-light"></i>
+							</span>
+							</a>
+						</li>
+						<li>
+							<a href="https://twitter.com/hackerspainters" target="_blank">
+							<span class="icon-stack">
+							<i class="icon-circle icon-stack-base"></i>
+							<i class="icon-twitter icon-light"></i></span>
+							</a>
+						</li>
+						<li>
+							<a href="https://plus.google.com/u/0/b/105855420164914868165/105855420164914868165/posts/p/pub" target="_blank">
+							<span class="icon-stack">
+							<i class="icon-circle icon-stack-base"></i>
+							<i class="icon-google-plus icon-light"></i>
+							</span>
+							</a>
+						</li>
+					</ul>
+				</div>
+
+				<div>
+					<h2>Our Partners</h2>
+					<ul>
+						<li>
+							NUS Enterprise
+						</li>
+					</ul>
+				</div>
+			</aside>
+
+			<main id="content" role="main">
+
+				<div class="inner list-posts">
+
+					{{ template "content" . }}
+
+					<footer class="site-footer clearfix">
+
+						<div class="copyright">
+							<section class="copyright">Copyright <a href="/">Hackers and Painters.</a> 
+								&copy; 2013 &bull; All rights reserved.
+							</section>
+							<section class="poweredby">Site built with <a href="http://golang.org" target="_blank">Golang</a>.</section>
+						</div>
+
+						<!--<div class="rss-feed">-->
+							<!--<a href="/" title="Subscribe to RSS">-->
+							<!--<span class="icon-stack">-->
+							<!--<i class="icon-circle icon-stack-base"></i>-->
+							<!--<i class="icon-rss icon-light"></i>-->
+							<!--</span>-->
+							<!--</a>-->
+						<!--</div>-->
+
+					</footer>
+
+				</div>
+
+			</main>
+
+		</div><!-- END #wrapper -->
+
+		<script src="/static/js/jquery.js"></script>
+		<script src="/static/js/plugins.min.js"></script>
+		<script src="/static/js/mots.js"></script>
+
+		<!-- Google Analytics -->
+		<script>
+		  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+		  ga('create', 'UA-45117966-1', 'hackersandpainters.sg');
+		  ga('send', 'pageview');
+
+		</script>
+
     </body>
+
 </html>
