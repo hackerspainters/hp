@@ -4,6 +4,7 @@ import (
 	"labix.org/v2/mgo"
 	"html/template"
 	"net/http"
+	"github.com/gorilla/mux"
 )
 
 var session *mgo.Session
@@ -13,7 +14,7 @@ var index = template.Must(template.ParseFiles(
 	"templates/index.html",
 ))
 
-func hello(w http.ResponseWriter, req *http.Request) {
+func homeHandler(w http.ResponseWriter, req *http.Request) {
 
 	s := session.Clone()
 	defer s.Close()
@@ -43,12 +44,17 @@ func main() {
 		panic(err)
 	}
 
-	// hardcoded urls for now. TODO: use gorilla mux
-	http.HandleFunc("/", hello)
-	http.HandleFunc("/event/add/", event_add)
+	// Routing with Gorilla Mux
+	r := mux.NewRouter()
+	r.HandleFunc("/", homeHandler)
+	r.HandleFunc("/event/add/", eventAddHandler)
+
     http.HandleFunc("/static/", func(w http.ResponseWriter, r *http.Request) {
         http.ServeFile(w, r, r.URL.Path[1:])
     })
+
+	http.Handle("/", r)
+
 	if err := http.ListenAndServe(":5050", nil); err != nil {
 		panic(err)
 	}

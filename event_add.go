@@ -11,7 +11,7 @@ var eventadd = template.Must(template.ParseFiles(
 	"templates/event_add.html",
 ))
 
-func event_add(w http.ResponseWriter, req *http.Request) {
+func eventAddHandler(w http.ResponseWriter, req *http.Request) {
 
 	// if request method is a GET, we will simply render the page
 	if req.Method != "POST" {
