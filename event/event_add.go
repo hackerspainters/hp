@@ -1,17 +1,22 @@
-package main
+package event
 
 import (
 	"net/http"
-	"fmt"
+	//"fmt"
 	"html/template"
+	"labix.org/v2/mgo"
+
+	"hp/db"
 )
+
+var session *mgo.Session
 
 var eventadd = template.Must(template.ParseFiles(
 	"templates/_base.html",
 	"templates/event_add.html",
 ))
 
-func eventAddHandler(w http.ResponseWriter, req *http.Request) {
+func EventAddHandler(w http.ResponseWriter, req *http.Request) {
 
 	// if request method is a GET, we will simply render the page
 	if req.Method != "POST" {
@@ -24,22 +29,15 @@ func eventAddHandler(w http.ResponseWriter, req *http.Request) {
 	event.Name = req.FormValue("name")
 	event.Description = req.FormValue("description")
 
-	if event.Name == "" {
-		fmt.Println("No event name submitted")
-	}
+	//if event.Name == "" {
+		//fmt.Println("No event name submitted")
+	//}
 
-	if event.Description == "" {
-		fmt.Println("No event description submitted")
-	}
+	//if event.Description == "" {
+		//fmt.Println("No event description submitted")
+	//}
 
-	s := session.Clone()
-	defer s.Close()
-
-	coll := s.DB("hp_db").C("events")
-	if err := coll.Insert(event); err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
+	db.Upsert(event)
 
 	http.Redirect(w, req, "/", http.StatusTemporaryRedirect)
 

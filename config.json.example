@@ -1,0 +1,23 @@
+{
+	"DbName": "your_database_name",
+    "SessionSecret": "(long random string here)",
+    "WebPort": 5050,
+    "TemplatePreCompile": true,
+    "TemplatePaths": ["(path to templates)"],
+    "Debug": false,
+    "GoogleAnalyticsTrackingID": "UA-(your GA id)",
+    "Streams": [{
+            "type": "twitter",
+            "user_id": "(your twitter user_id)"
+        }, {
+            "type": "github",
+            "username": "calvinchengx",
+            "token": "(your github user token)"
+        }
+    ],
+
+    "Gallery": {
+        "Type": "picasa",
+        "UserID": "(your picasa user id)"
+    }
+}
