@@ -63,6 +63,9 @@ func main() {
 	r := mux.NewRouter()
 	r.HandleFunc("/", HomeHandler)
 	r.HandleFunc("/users/", user.UsersHandler)
+	r.HandleFunc("/events/", event.EventListHandler)
+	r.HandleFunc("/events/next/", event.EventNextHandler)
+	r.HandleFunc("/events/past/", event.EventPastHandler)
 	r.HandleFunc("/event/add/", event.EventAddHandler)
 
     http.HandleFunc("/static/", func(w http.ResponseWriter, r *http.Request) {

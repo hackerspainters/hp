@@ -8,12 +8,15 @@ import (
 	"hp/db"
 )
 
-var eventadd = template.Must(template.ParseFiles(
-	"templates/_base.html",
-	"templates/event_add.html",
-))
-
 func EventAddHandler(w http.ResponseWriter, req *http.Request) {
+
+	// Public facing page that allows users (required field email and event title) to submit a topic
+	// TODO: implement check to ensure user submitted event provides an email
+
+	var eventadd = template.Must(template.ParseFiles(
+		"templates/_base.html",
+		"templates/event_add.html",
+	))
 
 	// if request method is a GET, we will simply render the page
 	if req.Method != "POST" {
@@ -26,6 +29,7 @@ func EventAddHandler(w http.ResponseWriter, req *http.Request) {
 	event.Name = req.FormValue("name")
 	event.Description = req.FormValue("description")
 
+	// TODO: validation
 	//if event.Name == "" {
 		//fmt.Println("No event name submitted")
 	//}
@@ -37,5 +41,45 @@ func EventAddHandler(w http.ResponseWriter, req *http.Request) {
 	db.Upsert(event)
 
 	http.Redirect(w, req, "/", http.StatusTemporaryRedirect)
+
+}
+
+func EventListHandler(w http.ResponseWriter, req *http.Request) {
+
+	// TODO: implement db.Find to retrieve data dynamically
+
+	var eventlist = template.Must(template.ParseFiles(
+		"templates/_base.html",
+		"templates/event_list.html",
+	))
+
+	eventlist.Execute(w, nil)
+
+}
+
+func EventPastHandler(w http.ResponseWriter, req *http.Request) {
+
+	// TODO: implement db.Find to retrieve data dynamically
+
+	var eventpast = template.Must(template.ParseFiles(
+		"templates/_base.html",
+		"templates/event_past.html",
+	))
+
+	eventpast.Execute(w, nil)
+
+}
+
+
+func EventNextHandler(w http.ResponseWriter, req *http.Request) {
+
+	// TODO: implement db.Find to retrieve data dynamically
+
+	var eventnext = template.Must(template.ParseFiles(
+		"templates/_base.html",
+		"templates/event_next.html",
+	))
+
+	eventnext.Execute(w, nil)
 
 }
