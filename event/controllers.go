@@ -4,12 +4,9 @@ import (
 	"net/http"
 	//"fmt"
 	"html/template"
-	"labix.org/v2/mgo"
 
 	"hp/db"
 )
-
-var session *mgo.Session
 
 var eventadd = template.Must(template.ParseFiles(
 	"templates/_base.html",

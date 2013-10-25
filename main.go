@@ -13,6 +13,7 @@ import (
 	"hp/conf"
 	"hp/db"
 	"hp/event"
+	"hp/user"
 )
 
 var session *mgo.Session
@@ -61,6 +62,7 @@ func main() {
 	// Routing with Gorilla Mux
 	r := mux.NewRouter()
 	r.HandleFunc("/", HomeHandler)
+	r.HandleFunc("/users/", user.UsersHandler)
 	r.HandleFunc("/event/add/", event.EventAddHandler)
 
     http.HandleFunc("/static/", func(w http.ResponseWriter, r *http.Request) {
