@@ -488,6 +488,14 @@ pre {
 	font-size: 1.2em;
 }
 
+.clean-ul {
+	list-style-type: none;
+	padding-left: 10px;
+}
+
+.clean-ul a {
+	text-decoration: none;
+}
 
 /* 5. Footer */
 
