@@ -1,10 +1,12 @@
 package event
 
 import (
+	"path"
 	"net/http"
 	//"fmt"
 	"html/template"
 
+	"hp/conf"
 	"hp/db"
 )
 
@@ -14,8 +16,8 @@ func EventAddHandler(w http.ResponseWriter, req *http.Request) {
 	// TODO: implement check to ensure user submitted event provides an email
 
 	var eventadd = template.Must(template.ParseFiles(
-		"templates/_base.html",
-		"templates/event_add.html",
+		path.Join(conf.Config.ProjectRoot, "templates/_base.html"),
+		path.Join(conf.Config.ProjectRoot, "templates/event_add.html"),
 	))
 
 	// if request method is a GET, we will simply render the page
@@ -75,9 +77,10 @@ func EventNextHandler(w http.ResponseWriter, req *http.Request) {
 
 	// TODO: implement db.Find to retrieve data dynamically
 
+	// TODO: simplify this with os.Glob
 	var eventnext = template.Must(template.ParseFiles(
-		"templates/_base.html",
-		"templates/event_next.html",
+		path.Join(conf.Config.ProjectRoot, "templates/_base.html"),
+		path.Join(conf.Config.ProjectRoot, "templates/event_next.html"),
 	))
 
 	eventnext.Execute(w, nil)

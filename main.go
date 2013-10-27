@@ -6,8 +6,6 @@ import (
 	"net/http"
 	"fmt"
 
-	"labix.org/v2/mgo"
-	"labix.org/v2/mgo/bson"
 	"github.com/gorilla/mux"
 
 	"hp/conf"
@@ -16,31 +14,18 @@ import (
 	"hp/user"
 )
 
-var session *mgo.Session
-
-var index = template.Must(template.ParseFiles(
-	"templates/_base.html",
-	"templates/index.html",
-))
-
-type M bson.M
+func ExampleIncr(x float64) float64 {
+	// example function that will be used for unit testing in golang
+	return x + 1
+}
 
 func HomeHandler(w http.ResponseWriter, req *http.Request) {
+	// homepage controller
 
-	//s := session.Clone()
-	//defer s.Close()
-
-	// set up collection and query
-	//coll := s.DB("hp_db").C("events")
-	//query := coll.Find(nil).Sort("-timestamp")
-
-	// execute query
-	//var events []event.Event
-	//err = db.Find(&event.Event{}, 
-	//if err := db.Find(&event.Event{}, M{}).Sort("-timestamp"); err != nil {
-		//http.Error(w, err.Error(), http.StatusInternalServerError)
-		//return
-	//}
+	var index = template.Must(template.ParseFiles(
+		"templates/_base.html",
+		"templates/index.html",
+	))
 
 	if err := index.Execute(w, nil); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)

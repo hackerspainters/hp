@@ -4,10 +4,12 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"path"
 )
 
 type config struct {
 	// serving options
+	ProjectRoot string
 	Debug bool
 
 	WebHost string "web address"
@@ -71,9 +73,11 @@ func init() {
 	Config.Debug = false
 	Config.TemplatePreCompile = true
 
-	if ecp := os.Getenv("MONET_CONFIG_PATH"); ecp != "" {
-		Path = ecp
+	if ecp := os.Getenv("PROJ_CONFIG_PATH"); ecp != "" {
+		Path = path.Join(ecp, "config.json")
+		Config.ProjectRoot = ecp
 	}
+
 	file, err := os.Open(Path)
 	if err != nil {
 		if len(Path) > 1 {
