@@ -51,8 +51,8 @@ func EventListHandler(w http.ResponseWriter, req *http.Request) {
 	// TODO: implement db.Find to retrieve data dynamically
 
 	var eventlist = template.Must(template.ParseFiles(
-		"templates/_base.html",
-		"templates/event_list.html",
+		path.Join(conf.Config.ProjectRoot, "templates/_base.html"),
+		path.Join(conf.Config.ProjectRoot, "templates/event_list.html"),
 	))
 
 	eventlist.Execute(w, nil)
@@ -64,8 +64,8 @@ func EventPastHandler(w http.ResponseWriter, req *http.Request) {
 	// TODO: implement db.Find to retrieve data dynamically
 
 	var eventpast = template.Must(template.ParseFiles(
-		"templates/_base.html",
-		"templates/event_past.html",
+		path.Join(conf.Config.ProjectRoot, "templates/_base.html"),
+		path.Join(conf.Config.ProjectRoot, "templates/event_past.html"),
 	))
 
 	eventpast.Execute(w, nil)
