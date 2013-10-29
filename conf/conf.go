@@ -78,8 +78,13 @@ func init() {
 	Config.Debug = false
 	Config.TemplatePreCompile = true
 
-	exename, _ := osext.Executable()
-	projRoot := path.Dir(exename)
+	var projRoot string
+	if ecp := os.Getenv("PROJ_CONFIG_PATH"); ecp != "" {
+		projRoot = ecp
+	} else {
+		exename, _ := osext.Executable()
+		projRoot = path.Dir(exename)
+	}
 
 	Path = path.Join(projRoot, "config.json")
 	Config.ProjectRoot = projRoot
