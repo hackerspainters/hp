@@ -10,10 +10,11 @@ import (
 type config struct {
 	// serving options
 	ProjectRoot string
-	Debug bool
+	Debug       bool
 
-	WebHost string "web address"
-	WebPort int    "web port"
+	WebHost    string "web address"
+	WebPort    int    "web port"
+	HttpPrefix string
 
 	SessionSecret             string
 	GoogleAnalyticsTrackingID string
@@ -46,6 +47,7 @@ func (c *config) DbHostString() string {
 func (c *config) String() string {
 	s := "Config:"
 	s += fmt.Sprintf("   Host: %s,\n", c.HostString())
+	s += fmt.Sprintf("   HttpPrefix: %s,\n", c.HttpPrefix)
 	s += fmt.Sprintf("   DB: %s,\n", c.DbHostString())
 	s += fmt.Sprintf("   TemplatePaths: %s,\n", c.TemplatePaths)
 	s += fmt.Sprintf("   StaticPath: %s,\n", c.StaticPath)
@@ -64,6 +66,7 @@ func init() {
 	// defaults
 	Config.WebHost = "0.0.0.0"
 	Config.WebPort = 5050
+	Config.HttpPrefix = "/"
 	Config.DbHost = "127.0.0.1"
 	Config.DbPort = 0
 	Config.DbName = "the_db"

@@ -1,9 +1,9 @@
 package event
 
 import (
-	"testing"
 	"net/http"
 	"net/http/httptest"
+	"testing"
 )
 
 func TestEventNextHandler(t *testing.T) {

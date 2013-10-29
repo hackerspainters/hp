@@ -9,12 +9,12 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	    <meta name="generator" content="golang blog" />
 
-		<link rel="stylesheet" type="text/css" href="/static/css/style.css" />
+		<link rel="stylesheet" type="text/css" href="{{ .HttpPrefix }}/static/css/style.css" />
 		<link href='http://fonts.googleapis.com/css?family=Abril+Fatface' rel='stylesheet' type='text/css'>
 		<link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,900,300italic,400italic,600italic,700italic,900italic" rel="stylesheet" type="text/css">
-		<link rel="stylesheet" href="/static/font-awesome/css/font-awesome.min.css">
+		<link rel="stylesheet" href="{{ .HttpPrefix }}/static/font-awesome/css/font-awesome.min.css">
 		<!--[if IE 7]>
-		<link rel="stylesheet" href="/static/font-awesome/css/font-awesome-ie7.min.css">
+		<link rel="stylesheet" href="{{ .HttpPrefix }}/static/font-awesome/css/font-awesome-ie7.min.css">
 		<![endif]-->
 		<!--[if lt IE 9]>
 		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -26,10 +26,10 @@
     <body class="home-template">
 		<div id="wrapper">
 
-			<aside id="sidebar" role="complementary" style="background-image: url(/static/img/blog_cover-1.jpg)">
+			<aside id="sidebar" role="complementary" style="background-image: url({{ .HttpPrefix }}/static/img/blog_cover-1.jpg)">
 				<div class="blog-logo">
 
-					<!--<a href="/" title="mots."><img src="/static/img/logo_mots.png" alt="mots." /></a>-->
+					<!--<a href="/" title="mots."><img src="{{ .HttpPrefix }}/static/img/logo_mots.png" alt="mots." /></a>-->
 					<a href="/">Hackers & Painters</a>
 
 				</div>
@@ -123,9 +123,9 @@
 
 		</div><!-- END #wrapper -->
 
-		<script src="/static/js/jquery.js"></script>
-		<script src="/static/js/plugins.min.js"></script>
-		<script src="/static/js/mots.js"></script>
+  <script src="{{ .HttpPrefix }}/static/js/jquery.js"></script>
+  <script src="{{ .HttpPrefix }}/static/js/plugins.min.js"></script>
+		<script src="{{ .HttpPrefix }}/static/js/mots.js"></script>
 
 		<!-- Google Analytics -->
 		<script>

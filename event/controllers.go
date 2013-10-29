@@ -1,8 +1,8 @@
 package event
 
 import (
-	"path"
 	"net/http"
+	"path"
 	//"fmt"
 	"html/template"
 
@@ -20,9 +20,15 @@ func EventAddHandler(w http.ResponseWriter, req *http.Request) {
 		path.Join(conf.Config.ProjectRoot, "templates/event_add.html"),
 	))
 
+	type eventAddData struct {
+		HttpPrefix string
+	}
+	data := eventAddData{}
+	data.HttpPrefix = conf.Config.HttpPrefix
+
 	// if request method is a GET, we will simply render the page
 	if req.Method != "POST" {
-		eventadd.Execute(w, nil)
+		eventadd.Execute(w, data)
 		return
 	}
 
@@ -33,11 +39,11 @@ func EventAddHandler(w http.ResponseWriter, req *http.Request) {
 
 	// TODO: validation
 	//if event.Name == "" {
-		//fmt.Println("No event name submitted")
+	//fmt.Println("No event name submitted")
 	//}
 
 	//if event.Description == "" {
-		//fmt.Println("No event description submitted")
+	//fmt.Println("No event description submitted")
 	//}
 
 	db.Upsert(event)
@@ -55,7 +61,12 @@ func EventListHandler(w http.ResponseWriter, req *http.Request) {
 		path.Join(conf.Config.ProjectRoot, "templates/event_list.html"),
 	))
 
-	eventlist.Execute(w, nil)
+	type eventListData struct {
+		HttpPrefix string
+	}
+	data := eventListData{}
+
+	eventlist.Execute(w, data)
 
 }
 
@@ -68,10 +79,14 @@ func EventPastHandler(w http.ResponseWriter, req *http.Request) {
 		path.Join(conf.Config.ProjectRoot, "templates/event_past.html"),
 	))
 
-	eventpast.Execute(w, nil)
+	type eventPastData struct {
+		HttpPrefix string
+	}
+	data := eventPastData{}
+
+	eventpast.Execute(w, data)
 
 }
-
 
 func EventNextHandler(w http.ResponseWriter, req *http.Request) {
 
@@ -83,6 +98,27 @@ func EventNextHandler(w http.ResponseWriter, req *http.Request) {
 		path.Join(conf.Config.ProjectRoot, "templates/event_next.html"),
 	))
 
-	eventnext.Execute(w, nil)
+	type eventNextData struct {
+		HttpPrefix string
+	}
+	data := eventNextData{}
+
+	eventnext.Execute(w, data)
+
+}
+
+func EventGrabHandler(w http.ResponseWriter, req *http.Request) {
+
+	var eventgrab = template.Must(template.ParseFiles(
+		path.Join(conf.Config.ProjectRoot, "templates/_base.html"),
+		path.Join(conf.Config.ProjectRoot, "templates/event_grab.html"),
+	))
+
+	type eventGrabData struct {
+		HttpPrefix string
+	}
+	data := eventGrabData{}
+
+	eventgrab.Execute(w, data)
 
 }
