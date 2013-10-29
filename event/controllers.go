@@ -124,14 +124,3 @@ func EventGrabHandler(w http.ResponseWriter, req *http.Request) {
 	eventgrab.Execute(w, data)
 
 }
-
-func EventGrabHandler(w http.ResponseWriter, req *http.Request) {
-
-	var eventgrab = template.Must(template.ParseFiles(
-		path.Join(conf.Config.ProjectRoot, "templates/_base.html"),
-		path.Join(conf.Config.ProjectRoot, "templates/event_grab.html"),
-	))
-
-	eventgrab.Execute(w, nil)
-
-}
