@@ -68,7 +68,7 @@ func init() {
 	// defaults
 	Config.WebHost = "0.0.0.0"
 	Config.WebPort = 5050
-	Config.HttpPrefix = "/"
+	Config.HttpPrefix = ""
 	Config.DbHost = "127.0.0.1"
 	Config.DbPort = 0
 	Config.DbName = "the_db"
