@@ -51,9 +51,10 @@
 					if (response.status === 'connected') {
 						var token = response.authResponse.accessToken
 						var fbuid = response.authResponse.userID
+      var expiresIn = response.authResponse.expiresIn
 						document.getElementById("message").innerHTML +=  "<br>Connected to Facebook";
 						displayUser()
-						getGroupEvents(fbuid, '{{ .Context.FacebookGroupId }}', token)
+						getGroupEvents(fbuid, '{{ .Context.FacebookGroupId }}', token, expiresIn)
 
 						//$("#status").html("Connected " + result.name)
 						//SUCCESS

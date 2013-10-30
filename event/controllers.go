@@ -1,12 +1,13 @@
 package event
 
 import (
-	"encoding/json"
 	"fmt"
-	"html/template"
 	"net/http"
 	"path"
-	"time"
+	//"time"
+	"encoding/json"
+	"github.com/hackerspainters/facebook"
+	"html/template"
 
 	"hp/conf"
 	"hp/db"
@@ -134,13 +135,19 @@ func EventGrabHandler(w http.ResponseWriter, req *http.Request) {
 func EventImportHandler(w http.ResponseWriter, r *http.Request) {
 
 	decoder := json.NewDecoder(r.Body)
-	var d struct {
-		Token string
-	}
+	//var d struct {
+	//Token   string
+	//ExpiresIn int
+	//}
+	MyToken := new(facebook.AccessToken)
+	err := decoder.Decode(&MyToken)
 
-	err := decoder.Decode(&d)
+	//err := decoder.Decode(&d)
 	if err != nil {
 		panic(err)
 	}
+
+	response := facebook.GetGroupEvents(MyToken, conf.Config.FacebookGroupId)
+	fmt.Println(response)
 
 }

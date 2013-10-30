@@ -44,13 +44,13 @@ function Logout() {
 	FB.logout(function(){document.location.reload();});
 }
 
-function getGroupEvents(fbuid, gid, token) {
+function getGroupEvents(fbuid, gid, token, expiresIn) {
 
 	FB.api('/'+gid+'?access_token='+token, function(response) {
 		$.ajax({
 			type: 'POST',
 			url: "/hp/events/import/",
-			data: JSON.stringify({token: token}),
+			data: JSON.stringify({token: token, expiresIn: expiresIn}),
 			dataType: 'json',
 			contentType: 'application/json'
 		});
