@@ -2,8 +2,8 @@
 function Login() {
 	FB.login(function(response) {
 		if (response.authResponse) {
-			// once we get the "code" and "access_token" from the authResponse, 
-			// we have send them to the backend with an ajax call and let the 
+			// once we get the "code" and "access_token" from the authResponse,
+			// we have send them to the backend with an ajax call and let the
 			// golang backend execute the event list parsing and dump the results into
 			// mongodb
 
@@ -12,7 +12,7 @@ function Login() {
 			console.log('User cancelled login or did not fully authorize.');
 		}
 	},{scope: 'user_events, email'});
-}  
+}
 
 function getUserInfo() {
 	FB.api('/me', function(response) {
@@ -29,7 +29,7 @@ function getUserInfo() {
 
 function displayUser() {
 	FB.api('/me', function(response) {
-		return response	
+		return response
 	});
 }
 
@@ -47,12 +47,20 @@ function Logout() {
 function getGroupEvents(fbuid, gid, token) {
 
 	FB.api('/'+gid+'?access_token='+token, function(response) {
+		$.ajax({
+			type: 'POST',
+			url: "/hp/events/import/",
+			data: JSON.stringify({token: token}),
+			dataType: 'json',
+			contentType: 'application/json'
+		});
 		if (response.owner.id == fbuid) {
 			$.ajax({
 				type: 'POST',
-				url: "/events/import/", 
-				data: {token: token}, 
-				dataType: 'json'
+				url: "/events/import/",
+				data: {token: token},
+				dataType: 'json',
+				contentType: 'application/json'
 			});
 			FB.api('/'+gid+'/events?access_token='+token, function(response) {
 				for (var i=0; i<response.data.length; i++) {

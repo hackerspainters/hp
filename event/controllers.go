@@ -1,12 +1,12 @@
 package event
 
 import (
+	"encoding/json"
+	"fmt"
+	"html/template"
 	"net/http"
 	"path"
-	"fmt"
 	"time"
-	"html/template"
-	"encoding/json"
 
 	"hp/conf"
 	"hp/db"
@@ -135,13 +135,12 @@ func EventImportHandler(w http.ResponseWriter, r *http.Request) {
 
 	decoder := json.NewDecoder(r.Body)
 	var d struct {
-		token   string
-	}
-	err := decoder.Decode(&d)
-	if err != nil {
-		panic("derp")
+		Token string
 	}
 
-	fmt.Println(d.token, time.Now().String())
+	err := decoder.Decode(&d)
+	if err != nil {
+		panic(err)
+	}
 
 }
