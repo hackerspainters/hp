@@ -9,12 +9,12 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	    <meta name="generator" content="golang blog" />
 
-		<link rel="stylesheet" type="text/css" href="{{ .HttpPrefix }}/static/css/style.css" />
+		<link rel="stylesheet" type="text/css" href="{{ .Context.HttpPrefix }}/static/css/style.css" />
 		<link href='http://fonts.googleapis.com/css?family=Abril+Fatface' rel='stylesheet' type='text/css'>
 		<link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,900,300italic,400italic,600italic,700italic,900italic" rel="stylesheet" type="text/css">
-		<link rel="stylesheet" href="{{ .HttpPrefix }}/static/font-awesome/css/font-awesome.min.css">
+		<link rel="stylesheet" href="{{ .Context.HttpPrefix }}/static/font-awesome/css/font-awesome.min.css">
 		<!--[if IE 7]>
-		<link rel="stylesheet" href="{{ .HttpPrefix }}/static/font-awesome/css/font-awesome-ie7.min.css">
+		<link rel="stylesheet" href="{{ .Context.HttpPrefix }}/static/font-awesome/css/font-awesome-ie7.min.css">
 		<![endif]-->
 		<!--[if lt IE 9]>
 		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -31,8 +31,8 @@
 			window.fbAsyncInit = function() {
 				// init the FB JS SDK
 				FB.init({
-					appId 		: '{{ .FacebookAppId }}',
-					channelUrl 	: '{{ .FacebookChannelUrl }}',
+					appId 		: '{{ .Context.FacebookAppId }}',
+					channelUrl 	: '{{ .Context.FacebookChannelUrl }}',
 
 					//appId      : '521976014544775',                    // App ID from the app dashboard
 					//channelUrl : '//hackersandpainters.sg/channel.html', // Channel file for x-domain comms
@@ -74,10 +74,10 @@
 
 		<div id="wrapper">
 
-			<aside id="sidebar" role="complementary" style="background-image: url({{ .HttpPrefix }}/static/img/blog_cover-1.jpg)">
+			<aside id="sidebar" role="complementary" style="background-image: url({{ .Context.HttpPrefix }}/static/img/blog_cover-1.jpg)">
 				<div class="blog-logo">
 
-					<!--<a href="/" title="mots."><img src="{{ .HttpPrefix }}/static/img/logo_mots.png" alt="mots." /></a>-->
+					<!--<a href="/" title="mots."><img src="{{ .Context.HttpPrefix }}/static/img/logo_mots.png" alt="mots." /></a>-->
 					<a href="/">Hackers & Painters</a>
 
 				</div>
@@ -171,10 +171,10 @@
 
 		</div><!-- END #wrapper -->
 
-  <script src="{{ .HttpPrefix }}/static/js/jquery.js"></script>
-  <script src="{{ .HttpPrefix }}/static/js/plugins.min.js"></script>
-		<script src="{{ .HttpPrefix }}/static/js/mots.js"></script>
-		<script src="{{ .HttpPrefix }}/static/js/facebook.js"></script>
+  <script src="{{ .Context.HttpPrefix }}/static/js/jquery.js"></script>
+  <script src="{{ .Context.HttpPrefix }}/static/js/plugins.min.js"></script>
+		<script src="{{ .Context.HttpPrefix }}/static/js/mots.js"></script>
+		<script src="{{ .Context.HttpPrefix }}/static/js/facebook.js"></script>
 
 		<!-- Google Analytics -->
 		<script>

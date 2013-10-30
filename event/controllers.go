@@ -7,6 +7,7 @@ import (
 	"html/template"
 
 	//"github.com/hackerspainters/facebook"
+	//"github.com/gorilla/context"
 
 	"hp/conf"
 	"hp/db"
@@ -112,19 +113,15 @@ func EventNextHandler(w http.ResponseWriter, req *http.Request) {
 func EventGrabHandler(w http.ResponseWriter, req *http.Request) {
 
 	var eventgrab = template.Must(template.ParseFiles(
-		path.Join(conf.Config.ProjectRoot, "templates/_base.html"),
-		path.Join(conf.Config.ProjectRoot, "templates/event_grab.html"),
+		"templates/_base.html",
+		"templates/event_grab.html",
 	))
 
 	type eventGrabData struct {
-		HttpPrefix 			string
-		FacebookAppId 		int
-		FacebookChannelUrl  string
+		Context *conf.Context
 	}
 
-	data := eventGrabData{}
-	data.FacebookAppId = conf.Config.FacebookAppId
-	data.FacebookChannelUrl = conf.Config.FacebookChannelUrl
+	data := eventGrabData{conf.DefaultContext(conf.Config)}
 
 	eventgrab.Execute(w, data)
 
