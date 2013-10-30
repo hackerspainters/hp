@@ -117,9 +117,14 @@ func EventGrabHandler(w http.ResponseWriter, req *http.Request) {
 	))
 
 	type eventGrabData struct {
-		HttpPrefix string
+		HttpPrefix 			string
+		FacebookAppId 		int
+		FacebookChannelUrl  string
 	}
+
 	data := eventGrabData{}
+	data.FacebookAppId = conf.Config.FacebookAppId
+	data.FacebookChannelUrl = conf.Config.FacebookChannelUrl
 
 	eventgrab.Execute(w, data)
 

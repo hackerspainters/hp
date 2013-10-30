@@ -29,6 +29,9 @@ type config struct {
 	DbPort int
 	DbName string
 
+	FacebookAppId int
+	FacebookChannelUrl string 
+
 	Gallery map[string]string
 }
 
