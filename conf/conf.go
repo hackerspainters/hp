@@ -32,6 +32,7 @@ type config struct {
 	//FacebookAppId int
 	FacebookAppId      string
 	FacebookChannelUrl string
+	FacebookGroupId    string
 
 	Gallery map[string]string
 }
@@ -39,6 +40,7 @@ type config struct {
 type Context struct {
 	FacebookAppId      string
 	FacebookChannelUrl string
+	FacebookGroupId    string
 	HttpPrefix         string
 }
 
@@ -48,6 +50,7 @@ func DefaultContext(c *config) *Context {
 	return &Context{
 		FacebookAppId:      c.FacebookAppId,
 		FacebookChannelUrl: c.FacebookChannelUrl,
+		FacebookGroupId:    c.FacebookGroupId,
 		HttpPrefix:         c.HttpPrefix,
 	}
 

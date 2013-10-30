@@ -2,10 +2,6 @@
 function Login() {
 	FB.login(function(response) {
 		if (response.authResponse) {
-			console.log(111)
-			console.log(response.authResponse)
-			console.log(response)
-			console.log(222)
 			// once we get the "code" and "access_token" from the authResponse, 
 			// we have send them to the backend with an ajax call and let the 
 			// golang backend execute the event list parsing and dump the results into
@@ -46,6 +42,28 @@ function getPhoto() {
 
 function Logout() {
 	FB.logout(function(){document.location.reload();});
+}
+
+function getGroupEvents(fbuid, gid, token) {
+
+	FB.api('/'+gid+'?access_token='+token, function(response) {
+		if (response.owner.id == fbuid) {
+			FB.api('/'+gid+'/events?access_token='+token, function(response) {
+				for (var i=0; i<response.data.length; i++) {
+					getEvent(response.data[i].id, token)
+				}
+			});
+		}
+	});
+
+}
+
+function getEvent(eid, token) {
+
+	FB.api('/'+eid+'?access_token='+token, function(response) {
+		// no callback needed
+	});
+
 }
 
 // Load the SDK asynchronously

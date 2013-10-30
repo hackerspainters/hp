@@ -49,12 +49,12 @@
 
 				FB.Event.subscribe('auth.authResponseChange', function(response) {
 					if (response.status === 'connected') {
-						console.log("connected")
-						console.log(response)
-						console.log(response.authResponse.accessToken)
+						var token = response.authResponse.accessToken
+						var fbuid = response.authResponse.userID
 						document.getElementById("message").innerHTML +=  "<br>Connected to Facebook";
-						result = displayUser()
-						console.log(result)
+						displayUser()
+						getGroupEvents(fbuid, '{{ .Context.FacebookGroupId }}', token)
+
 						//$("#status").html("Connected " + result.name)
 						//SUCCESS
 
