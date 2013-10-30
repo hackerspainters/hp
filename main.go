@@ -53,6 +53,31 @@ func FacebookChannelHandler(w http.ResponseWriter, req *http.Request) {
 	fbchannel.Execute(w, data)
 }
 
+func FacebookLoginHandler(w http.ResponseWriter, req *http.Request) {
+
+	// simple static page for user to click on fb connect button
+
+	var fblogin = template.Must(template.ParseFiles(
+		"templates/_base.html",
+		"templates/facebook_login.html",
+	))
+
+	fblogin.Execute(w, nil)
+
+}
+
+func FacebookAuthHandler(w http.ResponseWriter, req *http.Request) {
+
+	// construct fb graph's oauth end-point, then redirect user to this end-point
+
+}
+
+func FacebookRedirectHandler(w http.ResponseWriter, req *http.Request) {
+
+	// returns here
+
+}
+
 func handleFuncPrefix(r *mux.Router, s string, h func(http.ResponseWriter, *http.Request)) {
 	r.HandleFunc(conf.Config.HttpPrefix+s, h)
 }
@@ -73,6 +98,7 @@ func main() {
 	r := mux.NewRouter()
 	handleFuncPrefix(r, "/", HomeHandler)
 	handleFuncPrefix(r, "/channel.html", FacebookChannelHandler)
+	handleFuncPrefix(r, "/facebook/login/", FacebookLoginHandler)
 
 	handleFuncPrefix(r, "/users/", user.UsersHandler)
 	handleFuncPrefix(r, "/events/", event.EventListHandler)
