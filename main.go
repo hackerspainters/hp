@@ -27,11 +27,11 @@ func HomeHandler(w http.ResponseWriter, req *http.Request) {
 		"templates/index.html",
 	))
 
-	type homeData struct {
-		HttpPrefix string
+	type templateData struct {
+		Context *conf.Context
 	}
-	data := homeData{}
-	data.HttpPrefix = conf.Config.HttpPrefix
+
+	data := templateData{conf.DefaultContext(conf.Config)}
 
 	if err := index.Execute(w, data); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -44,11 +44,11 @@ func FacebookChannelHandler(w http.ResponseWriter, req *http.Request) {
 		"templates/channel.html",
 	))
 
-	type fbChannelData struct {
-		HttpPrefix string
+	type templateData struct {
+		Context *conf.Context
 	}
-	data := fbChannelData{}
-	data.HttpPrefix = conf.Config.HttpPrefix
+
+	data := templateData{conf.DefaultContext(conf.Config)}
 
 	fbchannel.Execute(w, data)
 }
@@ -62,7 +62,13 @@ func FacebookLoginHandler(w http.ResponseWriter, req *http.Request) {
 		"templates/facebook_login.html",
 	))
 
-	fblogin.Execute(w, nil)
+	type templateData struct {
+		Context *conf.Context
+	}
+
+	data := templateData{conf.DefaultContext(conf.Config)}
+
+	fblogin.Execute(w, data)
 
 }
 

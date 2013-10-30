@@ -23,11 +23,11 @@ func EventAddHandler(w http.ResponseWriter, req *http.Request) {
 		path.Join(conf.Config.ProjectRoot, "templates/event_add.html"),
 	))
 
-	type eventAddData struct {
-		HttpPrefix string
+	type templateData struct {
+		Context *conf.Context
 	}
-	data := eventAddData{}
-	data.HttpPrefix = conf.Config.HttpPrefix
+
+	data := templateData{conf.DefaultContext(conf.Config)}
 
 	// if request method is a GET, we will simply render the page
 	if req.Method != "POST" {
@@ -64,10 +64,11 @@ func EventListHandler(w http.ResponseWriter, req *http.Request) {
 		path.Join(conf.Config.ProjectRoot, "templates/event_list.html"),
 	))
 
-	type eventListData struct {
-		HttpPrefix string
+	type templateData struct {
+		Context *conf.Context
 	}
-	data := eventListData{}
+
+	data := templateData{conf.DefaultContext(conf.Config)}
 
 	eventlist.Execute(w, data)
 
@@ -82,10 +83,11 @@ func EventPastHandler(w http.ResponseWriter, req *http.Request) {
 		path.Join(conf.Config.ProjectRoot, "templates/event_past.html"),
 	))
 
-	type eventPastData struct {
-		HttpPrefix string
+	type templateData struct {
+		Context *conf.Context
 	}
-	data := eventPastData{}
+
+	data := templateData{conf.DefaultContext(conf.Config)}
 
 	eventpast.Execute(w, data)
 
@@ -101,10 +103,11 @@ func EventNextHandler(w http.ResponseWriter, req *http.Request) {
 		path.Join(conf.Config.ProjectRoot, "templates/event_next.html"),
 	))
 
-	type eventNextData struct {
-		HttpPrefix string
+	type templateData struct {
+		Context *conf.Context
 	}
-	data := eventNextData{}
+
+	data := templateData{conf.DefaultContext(conf.Config)}
 
 	eventnext.Execute(w, data)
 
@@ -113,15 +116,17 @@ func EventNextHandler(w http.ResponseWriter, req *http.Request) {
 func EventGrabHandler(w http.ResponseWriter, req *http.Request) {
 
 	var eventgrab = template.Must(template.ParseFiles(
-		"templates/_base.html",
-		"templates/event_grab.html",
+		path.Join(conf.Config.ProjectRoot, "templates/_base.html"),
+		path.Join(conf.Config.ProjectRoot, "templates/event_grab.html"),
+		//"templates/_base.html",
+		//"templates/event_grab.html",
 	))
 
-	type eventGrabData struct {
+	type templateData struct {
 		Context *conf.Context
 	}
 
-	data := eventGrabData{conf.DefaultContext(conf.Config)}
+	data := templateData{conf.DefaultContext(conf.Config)}
 
 	eventgrab.Execute(w, data)
 
