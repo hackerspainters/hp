@@ -3,11 +3,10 @@ package event
 import (
 	"net/http"
 	"path"
-	//"fmt"
+	"fmt"
+	"time"
 	"html/template"
-
-	//"github.com/hackerspainters/facebook"
-	//"github.com/gorilla/context"
+	"encoding/json"
 
 	"hp/conf"
 	"hp/db"
@@ -129,5 +128,20 @@ func EventGrabHandler(w http.ResponseWriter, req *http.Request) {
 	data := templateData{conf.DefaultContext(conf.Config)}
 
 	eventgrab.Execute(w, data)
+
+}
+
+func EventImportHandler(w http.ResponseWriter, r *http.Request) {
+
+	decoder := json.NewDecoder(r.Body)
+	var d struct {
+		token   string
+	}
+	err := decoder.Decode(&d)
+	if err != nil {
+		panic("derp")
+	}
+
+	fmt.Println(d.token, time.Now().String())
 
 }

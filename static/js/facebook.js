@@ -48,6 +48,12 @@ function getGroupEvents(fbuid, gid, token) {
 
 	FB.api('/'+gid+'?access_token='+token, function(response) {
 		if (response.owner.id == fbuid) {
+			$.ajax({
+				type: 'POST',
+				url: "/events/import/", 
+				data: {token: token}, 
+				dataType: 'json'
+			});
 			FB.api('/'+gid+'/events?access_token='+token, function(response) {
 				for (var i=0; i<response.data.length; i++) {
 					getEvent(response.data[i].id, token)

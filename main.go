@@ -114,6 +114,7 @@ func main() {
 
 	// one-off link that allows event owner to grab group-specific events set with group-only perms
 	handleFuncPrefix(r, "/events/grab/", event.EventGrabHandler)
+	handleFuncPrefix(r, "/events/import/", event.EventImportHandler)
 
 	handleFuncPrefix(r, "/static/{_:.*}", func(w http.ResponseWriter, r *http.Request) {
 		// Ignore prefix + leading /
