@@ -47,18 +47,11 @@ function Logout() {
 function getGroupEvents(fbuid, gid, token, expiresIn) {
 
 	FB.api('/'+gid+'?access_token='+token, function(response) {
-		$.ajax({
-			type: 'POST',
-			url: "/hp/events/import/",
-			data: JSON.stringify({token: token, expiresIn: expiresIn}),
-			dataType: 'json',
-			contentType: 'application/json'
-		});
 		if (response.owner.id == fbuid) {
 			$.ajax({
 				type: 'POST',
 				url: "/events/import/",
-				data: {token: token},
+				data: JSON.stringify({token: token, expiresIn: expiresIn}),
 				dataType: 'json',
 				contentType: 'application/json'
 			});

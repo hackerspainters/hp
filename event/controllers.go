@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"net/http"
 	"path"
-	//"time"
 	"encoding/json"
 	"github.com/hackerspainters/facebook"
 	"html/template"
@@ -116,10 +115,8 @@ func EventNextHandler(w http.ResponseWriter, req *http.Request) {
 func EventGrabHandler(w http.ResponseWriter, req *http.Request) {
 
 	var eventgrab = template.Must(template.ParseFiles(
-		path.Join(conf.Config.ProjectRoot, "templates/_base.html"),
-		path.Join(conf.Config.ProjectRoot, "templates/event_grab.html"),
-		//"templates/_base.html",
-		//"templates/event_grab.html",
+		"templates/_base.html",
+		"templates/event_grab.html",
 	))
 
 	type templateData struct {
@@ -135,19 +132,20 @@ func EventGrabHandler(w http.ResponseWriter, req *http.Request) {
 func EventImportHandler(w http.ResponseWriter, r *http.Request) {
 
 	decoder := json.NewDecoder(r.Body)
-	//var d struct {
-	//Token   string
-	//ExpiresIn int
-	//}
-	MyToken := new(facebook.AccessToken)
-	err := decoder.Decode(&MyToken)
 
-	//err := decoder.Decode(&d)
+	MyToken := facebook.AccessToken{}
+	err := decoder.Decode(&MyToken)
 	if err != nil {
 		panic(err)
 	}
 
-	response := facebook.GetGroupEvents(MyToken, conf.Config.FacebookGroupId)
-	fmt.Println(response)
+	events := facebook.GetGroupEvents(&MyToken, conf.Config.FacebookGroupId)
+	event_ids := facebook.GetGroupEventIds(events)
+
+	for i := 0; i < len(event_ids); i++ {
+		event := facebook.GetEvent(&MyToken, event_ids[i])
+		fmt.Println(event)
+		// TODO: now that we have the exact event, it's time to save it into mongodb
+	}
 
 }
