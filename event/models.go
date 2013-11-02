@@ -9,13 +9,37 @@ import (
 )
 
 type Event struct {
-	ID          bson.ObjectId `bson:"_id,omitempty"`
-	Slug        string
-	Timestamp   time.Time
-	Name        string
-	Description string
-	Speaker     int
-	Published   bool
+	ID           bson.ObjectId `bson:"_id,omitempty"`
+	Slug         string
+	Name         string
+	Description  string
+    Timestamp    time.Time
+	Speaker      int
+	Published    bool
+
+	Data struct {
+		Id           string
+		Owner struct {
+			Name    string
+			Id      string
+		}
+		Name            string
+		Description     string
+		StartTime		string
+		TimeZone		string
+		IsDateOnly		bool
+		Location		string
+		Venue struct {
+			Latitude	float64
+			Longitude	float64
+			City		string
+			Country	    string
+			Id			string
+			Street		string
+			Zip		    string
+		}
+		UpdatedTime	    string
+	}
 }
 
 func NewEvent() *Event {

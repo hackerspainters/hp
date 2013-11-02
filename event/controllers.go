@@ -141,11 +141,14 @@ func EventImportHandler(w http.ResponseWriter, r *http.Request) {
 
 	events := facebook.GetGroupEvents(&MyToken, conf.Config.FacebookGroupId)
 	event_ids := facebook.GetGroupEventIds(events)
+	event := NewEvent()
 
 	for i := 0; i < len(event_ids); i++ {
-		event := facebook.GetEvent(&MyToken, event_ids[i])
-		fmt.Println(event)
+		e := facebook.GetEvent(&MyToken, event_ids[i])
+		event.Data  = e
 		// TODO: now that we have the exact event, it's time to save it into mongodb
+		fmt.Println(event)
+		db.Upsert(event)
 	}
 
 }
