@@ -58,6 +58,7 @@ func Cursor(m Model) *mgo.Collection {
 }
 
 func Find(m Model, query interface{}) *mgo.Query {
+	fmt.Println(query)
 	cursor := Cursor(m)
 	return cursor.Find(query)
 }

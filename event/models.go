@@ -10,6 +10,7 @@ import (
 
 type Event struct {
 	ID           bson.ObjectId `bson:"_id,omitempty"`
+	Eid          string
 	Slug         string
 	Name         string
 	Description  string
@@ -64,7 +65,7 @@ func (e *Event) Unique() bson.M {
 	if len(e.ID) > 0 {
 		return bson.M{"_id": e.ID}
 	}
-	return bson.M{"slug": e.Slug}
+	return bson.M{"eid": e.Eid}
 }
 
 // register "models"
