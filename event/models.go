@@ -26,7 +26,8 @@ type Event struct {
 		}
 		Name            string
 		Description     string
-		StartTime		string
+		StartTime		string    `bson:"start_time" json:"start_time"`
+		EndTime         string    `bson:"end_time" json:"end_time"`
 		TimeZone		string
 		IsDateOnly		bool
 		Location		string
@@ -39,7 +40,7 @@ type Event struct {
 			Street		string
 			Zip		    string
 		}
-		UpdatedTime	    string
+		UpdatedTime	    string    `bson:"updated_time" json:"updated_time"`
 	}
 }
 

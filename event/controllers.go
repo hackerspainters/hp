@@ -1,6 +1,8 @@
 package event
 
 import (
+	"fmt"
+	"time"
 	"net/http"
 	"path"
 	"encoding/json"
@@ -95,11 +97,22 @@ func EventPastHandler(w http.ResponseWriter, req *http.Request) {
 func EventNextHandler(w http.ResponseWriter, req *http.Request) {
 
 	// TODO: implement db.Find to retrieve data dynamically
+	fmt.Println(time.Now())
+
+	var event *Event
+	var events []Event
+
+	search := bson.M{"data": bson.M{"starttime": bson.M{"$gte": time.Now()}}}
+	err := db.Find(event, search).All(&events)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(events)
 
 	// TODO: simplify this with os.Glob
 	var eventnext = template.Must(template.ParseFiles(
-		path.Join(conf.Config.ProjectRoot, "templates/_base.html"),
-		path.Join(conf.Config.ProjectRoot, "templates/event_next.html"),
+		"templates/_base.html",
+		"templates/event_next.html",
 	))
 
 	type templateData struct {
