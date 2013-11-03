@@ -1,8 +1,6 @@
 package event
 
 import (
-	"fmt"
-	"reflect"
 	"net/http"
 	"path"
 	"encoding/json"
@@ -147,20 +145,18 @@ func EventImportHandler(w http.ResponseWriter, r *http.Request) {
 
 	for i := 0; i < len(event_ids); i++ {
 		e := facebook.GetEvent(&MyToken, event_ids[i])
-		fmt.Println(e.Id)
-		fmt.Println(reflect.TypeOf(e.Id))
 
-		var ev *Event
-		err := db.Find(ev, bson.M{"eid": e.Id}).One(&ev)
+		var result *Event
+		err := db.Find(&Event{}, bson.M{"eid": e.Id}).One(&result)
 		if err != nil {
 			// Not found, so insert our event object
 			event.Eid = e.Id
 			event.Data = e
 			db.Upsert(event)
 		} else {
-			// Already exists, so simply update as the retrieved ev object
-			ev.Data = e
-			db.Upsert(ev)
+			// Already exists, so simply update as the retrieved result object
+			result.Data = e
+			db.Upsert(result)
 		}
 	}
 
