@@ -1,7 +1,6 @@
 package event
 
 import (
-	"fmt"
 	"time"
 	"net/http"
 	"path"
@@ -94,6 +93,7 @@ func EventPastHandler(w http.ResponseWriter, req *http.Request) {
 
 }
 
+// This handler renders the event on the upcoming Friday
 func EventNextHandler(w http.ResponseWriter, req *http.Request) {
 
 	var event *Event
