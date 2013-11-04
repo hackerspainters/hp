@@ -9,12 +9,12 @@
 	</header>
 
 	<section class="post-excerpt">
-		<h3>How I Built My Own 3D Printer With No Experience by Shafiq Ali</h3>
+		<h3>{{ .E.Data.Name }}</h3>
 		<span class="post-meta">
-			<time datetime="2013-11-01">1 Nov 2013</time>
+			<time datetime="2013-11-01">{{ .E.Data.StartTime }}</time>
 		</span>
 		<p>
-			"I'll probably talk about my thoughts about 3D printing and getting into 3D printing from a non-engineer's point of view."
+			{{ .E.Data.Description }}
 		</p>
 	</section>
 

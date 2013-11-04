@@ -96,20 +96,14 @@ func EventPastHandler(w http.ResponseWriter, req *http.Request) {
 
 func EventNextHandler(w http.ResponseWriter, req *http.Request) {
 
-	// TODO: implement db.Find to retrieve data dynamically
-	fmt.Println(time.Now())
-
 	var event *Event
-	var events []Event
-
-	search := bson.M{"data": bson.M{"starttime": bson.M{"$gte": time.Now()}}}
-	err := db.Find(event, search).All(&events)
+	search := bson.M{"data.start_time": bson.M{"$gte": time.Now()}}
+	sort := "data.start_time"
+	err := db.Find(event, search).Sort(sort).One(&event)
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println(events)
 
-	// TODO: simplify this with os.Glob
 	var eventnext = template.Must(template.ParseFiles(
 		"templates/_base.html",
 		"templates/event_next.html",
@@ -117,9 +111,10 @@ func EventNextHandler(w http.ResponseWriter, req *http.Request) {
 
 	type templateData struct {
 		Context *conf.Context
+		E *Event
 	}
 
-	data := templateData{conf.DefaultContext(conf.Config)}
+	data := templateData{conf.DefaultContext(conf.Config), event}
 
 	eventnext.Execute(w, data)
 
@@ -154,7 +149,7 @@ func EventImportHandler(w http.ResponseWriter, r *http.Request) {
 
 	events := facebook.GetGroupEvents(&MyToken, conf.Config.FacebookGroupId)
 	event_ids := facebook.GetGroupEventIds(events)
-	event := NewEvent()
+	//event := NewEvent()
 
 	for i := 0; i < len(event_ids); i++ {
 		e := facebook.GetEvent(&MyToken, event_ids[i])
@@ -163,14 +158,37 @@ func EventImportHandler(w http.ResponseWriter, r *http.Request) {
 		err := db.Find(&Event{}, bson.M{"eid": e.Id}).One(&result)
 		if err != nil {
 			// Not found, so insert our event object
-			event.Eid = e.Id
-			event.Data = e
+			event := wrangleData(e)
 			db.Upsert(event)
 		} else {
 			// Already exists, so simply update as the retrieved result object
-			result.Data = e
+			result := wrangleData(e)
 			db.Upsert(result)
 		}
 	}
 
+}
+
+// cast to correct types and handle our own custom fields as needed
+func wrangleData(e facebook.Event) *Event {
+	const layout = "2006-01-02T15:04:05-0700"
+	event := NewEvent()
+	event.Eid = e.Id
+	event.Data.Name = e.Name
+	event.Data.Description = e.Description
+	event.Data.StartTime, _ = time.Parse(layout, e.StartTime)
+	event.Data.EndTime, _ = time.Parse(layout, e.EndTime)
+	event.Data.UpdatedTime, _ = time.Parse(layout, e.UpdatedTime)
+	event.Data.TimeZone = e.TimeZone
+	event.Data.IsDateOnly = e.IsDateOnly
+	event.Data.Location = e.Location
+	event.Data.Venue.Latitude = e.Venue.Latitude
+	event.Data.Venue.Longitude = e.Venue.Longitude
+	event.Data.Venue.City = e.Venue.City
+	event.Data.Venue.Country = e.Venue.Country
+	event.Data.Venue.Id = e.Venue.Id
+	event.Data.Venue.Street = e.Venue.Street
+	event.Data.Venue.Zip = e.Venue.Zip
+	event.Data.UpdatedTime, _ = time.Parse(layout, e.UpdatedTime)
+	return event
 }
