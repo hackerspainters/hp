@@ -1,12 +1,26 @@
 package event
 
 import (
-	"testing"
+	//"fmt"
 	"net/http"
 	"net/http/httptest"
+	"testing"
+
+	// TODO: begin using suite and assert from testify
+	//"github.com/stretchr/testify/suite"
+	//"github.com/stretchr/testify/assert"
+
+	"hp/db"
 )
 
+
+
 func TestEventNextHandler(t *testing.T) {
+
+	// set up test database
+
+	db.Connect("127.0.0.1", "test_db")
+	db.RegisterAllIndexes()
 
 	// integration test on http requests to EventNextHandler
 
@@ -15,8 +29,8 @@ func TestEventNextHandler(t *testing.T) {
 
 	EventNextHandler(response, request)
 
-	if response.Code != http.StatusOK {
-		t.Fatalf("Non-expected status code%v:\n\tbody: %v", "200", response.Code)
+	if response.Code != 302 {
+		t.Fatalf("Non-expected status code %v:\n\tbody: %v", "200", response.Code)
 	}
 
 }

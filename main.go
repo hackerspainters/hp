@@ -1,10 +1,10 @@
 package main
 
 import (
-	"reflect"
+	"fmt"
 	"html/template"
 	"net/http"
-	"fmt"
+	"reflect"
 
 	"github.com/gorilla/mux"
 
@@ -27,9 +27,84 @@ func HomeHandler(w http.ResponseWriter, req *http.Request) {
 		"templates/index.html",
 	))
 
-	if err := index.Execute(w, nil); err != nil {
+	type templateData struct {
+		Context *conf.Context
+	}
+
+	data := templateData{conf.DefaultContext(conf.Config)}
+
+	if err := index.Execute(w, data); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
+}
+
+func NotFoundHandler(w http.ResponseWriter, req *http.Request) {
+
+	var notfound = template.Must(template.ParseFiles(
+		"templates/_base.html",
+		"templates/404.html",
+	))
+
+	type templateData struct {
+		Context *conf.Context
+	}
+
+	data := templateData{conf.DefaultContext(conf.Config)}
+
+	if err := notfound.Execute(w, data); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+
+}
+
+func FacebookChannelHandler(w http.ResponseWriter, req *http.Request) {
+
+	var fbchannel = template.Must(template.ParseFiles(
+		"templates/channel.html",
+	))
+
+	type templateData struct {
+		Context *conf.Context
+	}
+
+	data := templateData{conf.DefaultContext(conf.Config)}
+
+	fbchannel.Execute(w, data)
+}
+
+func FacebookLoginHandler(w http.ResponseWriter, req *http.Request) {
+
+	// simple static page for user to click on fb connect button
+
+	var fblogin = template.Must(template.ParseFiles(
+		"templates/_base.html",
+		"templates/facebook_login.html",
+	))
+
+	type templateData struct {
+		Context *conf.Context
+	}
+
+	data := templateData{conf.DefaultContext(conf.Config)}
+
+	fblogin.Execute(w, data)
+
+}
+
+func FacebookAuthHandler(w http.ResponseWriter, req *http.Request) {
+
+	// construct fb graph's oauth end-point, then redirect user to this end-point
+
+}
+
+func FacebookRedirectHandler(w http.ResponseWriter, req *http.Request) {
+
+	// returns here
+
+}
+
+func handleFuncPrefix(r *mux.Router, s string, h func(http.ResponseWriter, *http.Request)) {
+	r.HandleFunc(conf.Config.HttpPrefix+s, h)
 }
 
 func main() {
@@ -46,16 +121,25 @@ func main() {
 
 	// Routing with Gorilla Mux
 	r := mux.NewRouter()
-	r.HandleFunc("/", HomeHandler)
-	r.HandleFunc("/users/", user.UsersHandler)
-	r.HandleFunc("/events/", event.EventListHandler)
-	r.HandleFunc("/events/next/", event.EventNextHandler)
-	r.HandleFunc("/events/past/", event.EventPastHandler)
-	r.HandleFunc("/event/add/", event.EventAddHandler)
+	handleFuncPrefix(r, "/", HomeHandler)
+	handleFuncPrefix(r, "/404/", NotFoundHandler)
+	handleFuncPrefix(r, "/channel.html", FacebookChannelHandler)
+	handleFuncPrefix(r, "/facebook/login/", FacebookLoginHandler)
 
-    http.HandleFunc("/static/", func(w http.ResponseWriter, r *http.Request) {
-        http.ServeFile(w, r, r.URL.Path[1:])
-    })
+	handleFuncPrefix(r, "/users/", user.UsersHandler)
+	handleFuncPrefix(r, "/events/", event.EventListHandler)
+	handleFuncPrefix(r, "/events/next/", event.EventNextHandler)
+	handleFuncPrefix(r, "/events/past/", event.EventPastHandler)
+	handleFuncPrefix(r, "/event/add/", event.EventAddHandler)
+
+	// one-off link that allows event owner to grab group-specific events set with group-only perms
+	handleFuncPrefix(r, "/events/grab/", event.EventGrabHandler)
+	handleFuncPrefix(r, "/events/import/", event.EventImportHandler)
+
+	handleFuncPrefix(r, "/static/{_:.*}", func(w http.ResponseWriter, r *http.Request) {
+		// Ignore prefix + leading /
+		http.ServeFile(w, r, r.URL.Path[len(conf.Config.HttpPrefix)+1:])
+	})
 
 	http.Handle("/", r)
 
