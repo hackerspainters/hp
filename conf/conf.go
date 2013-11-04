@@ -29,7 +29,32 @@ type config struct {
 	DbPort int
 	DbName string
 
+	//FacebookAppId int
+	FacebookAppId      string
+	FacebookChannelUrl string
+	FacebookGroupId    string
+
 	Gallery map[string]string
+}
+
+type Context struct {
+	FacebookAppId      string
+	FacebookChannelUrl string
+	FacebookGroupId    string
+	HttpPrefix         string
+}
+
+//var DefaultContext = new(Context)
+
+func DefaultContext(c *config) *Context {
+	return &Context{
+		FacebookAppId:      c.FacebookAppId,
+		FacebookChannelUrl: c.FacebookChannelUrl,
+		FacebookGroupId:    c.FacebookGroupId,
+		HttpPrefix:         c.HttpPrefix,
+	}
+
+	//return
 }
 
 var Path = "./config.json"
@@ -102,4 +127,5 @@ func init() {
 	if err != nil {
 		fmt.Printf("Error decoding file %s\n%s\n", Path, err)
 	}
+
 }

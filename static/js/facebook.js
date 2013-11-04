@@ -1,50 +1,18 @@
-window.fbAsyncInit = function() {
-	// init the FB JS SDK
-	FB.init({
-		appId      : '521976014544775',                    // App ID from the app dashboard
-		channelUrl : '//hackersandpainters.sg/channel.html', // Channel file for x-domain comms
-
-		// for local machine testing purposes
-		// appId      : '232276926931495',
-		// channelUrl : '//calvinchengx.dyndns.org/channel.html', 
-
-		status     : true,                                 // Check Facebook Login status
-		xfbml      : true                                  // Look for social plugins on the page
-	});
-
-	// Additional initialization code such as adding Event Listeners goes here
-
-	FB.Event.subscribe('auth.authResponseChange', function(response) {
-		if (response.status === 'connected') {
-			document.getElementById("message").innerHTML +=  "<br>Connected to Facebook";
-			//SUCCESS
-
-		} else if (response.status === 'not_authorized') {
-			document.getElementById("message").innerHTML +=  "<br>Failed to Connect";
-			//FAILED
-		} else {
-			document.getElementById("message").innerHTML +=  "<br>Logged Out";
-			//UNKNOWN ERROR
-		}
-	});	
-
-};
 
 function Login() {
 	FB.login(function(response) {
 		if (response.authResponse) {
-				console.log(response.authResponse)
-				// once we get the "code" and "access_token" from the authResponse, 
-				// we have send them to the backend with an ajax call and let the 
-				// golang backend execute the event list parsing and dump the results into
-				// mongodb
+			// once we get the "code" and "access_token" from the authResponse,
+			// we have send them to the backend with an ajax call and let the
+			// golang backend execute the event list parsing and dump the results into
+			// mongodb
 
-				getUserInfo();
-			} else {
-				console.log('User cancelled login or did not fully authorize.');
-			}
+			getUserInfo();
+		} else {
+			console.log('User cancelled login or did not fully authorize.');
+		}
 	},{scope: 'user_events, email'});
-}  
+}
 
 function getUserInfo() {
 	FB.api('/me', function(response) {
@@ -59,6 +27,12 @@ function getUserInfo() {
 	});
 }
 
+function displayUser() {
+	FB.api('/me', function(response) {
+		return response
+	});
+}
+
 function getPhoto() {
 	FB.api('/me/picture?type=normal', function(response) {
 		var str="<br/><b>Pic</b> : <img src='"+response.data.url+"'/>";
@@ -68,6 +42,35 @@ function getPhoto() {
 
 function Logout() {
 	FB.logout(function(){document.location.reload();});
+}
+
+function getGroupEvents(fbuid, gid, token, expiresIn) {
+
+	FB.api('/'+gid+'?access_token='+token, function(response) {
+		if (response.owner.id == fbuid) {
+			$.ajax({
+				type: 'POST',
+				url: "/events/import/",
+				data: JSON.stringify({token: token, expiresIn: expiresIn}),
+				dataType: 'json',
+				contentType: 'application/json'
+			});
+			FB.api('/'+gid+'/events?access_token='+token, function(response) {
+				for (var i=0; i<response.data.length; i++) {
+					getEvent(response.data[i].id, token)
+				}
+			});
+		}
+	});
+
+}
+
+function getEvent(eid, token) {
+
+	FB.api('/'+eid+'?access_token='+token, function(response) {
+		// no callback needed
+	});
+
 }
 
 // Load the SDK asynchronously
