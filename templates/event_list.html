@@ -2,18 +2,28 @@
 
 {{ define "content" }}
 
+<header class="post-header">
+	<h2 class="post-title">Upcoming Events</h2>
+	<span class="post-meta">
+		As listed on <a href="https://www.facebook.com/groups/hackerspainters/events/" target="_blank">https://www.facebook.com/groups/hackerspainters/events/</a>
+	</span>
+</header>
+
+{{ range .Events }}
 <article class="post tag-mots tag-responsive">
-
 	<header class="post-header">
-		<h2 class="post-title">Upcoming Events</h2>
+		<h3>{{ .Data.Name }}</h3>
+		<span class="post-meta">
+			<time datetime='{{ .Data.StartTime.Format "2006-1-2" }}'>{{ .Data.StartTime.Format "Mon, 2 Jan 2006 @ 15:04" }}</time>
+		</span>
 	</header>
-
 	<section class="post-excerpt">
 		<p>
-			Upcoming Friday sessions are now listed in <a href="https://www.facebook.com/groups/hackerspainters/events/" target="_blank">https://www.facebook.com/groups/hackerspainters/events/</a>.  They will be synchronized directly on to this website soon. :-)
+			{{ .Data.Description }}
 		</p>
 	</section>
-
 </article>
+{{ end }}
+
 
 {{ end }}
