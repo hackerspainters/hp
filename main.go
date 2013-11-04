@@ -38,6 +38,25 @@ func HomeHandler(w http.ResponseWriter, req *http.Request) {
 	}
 }
 
+func NotFoundHandler(w http.ResponseWriter, req *http.Request) {
+
+	var notfound = template.Must(template.ParseFiles(
+		"templates/_base.html",
+		"templates/404.html",
+	))
+
+	type templateData struct {
+		Context *conf.Context
+	}
+
+	data := templateData{conf.DefaultContext(conf.Config)}
+
+	if err := notfound.Execute(w, data); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+
+}
+
 func FacebookChannelHandler(w http.ResponseWriter, req *http.Request) {
 
 	var fbchannel = template.Must(template.ParseFiles(
@@ -103,6 +122,7 @@ func main() {
 	// Routing with Gorilla Mux
 	r := mux.NewRouter()
 	handleFuncPrefix(r, "/", HomeHandler)
+	handleFuncPrefix(r, "/404/", NotFoundHandler)
 	handleFuncPrefix(r, "/channel.html", FacebookChannelHandler)
 	handleFuncPrefix(r, "/facebook/login/", FacebookLoginHandler)
 

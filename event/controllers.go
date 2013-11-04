@@ -1,13 +1,17 @@
 package event
 
 import (
+	"fmt"
 	"time"
 	"net/http"
 	"path"
 	"encoding/json"
-	"github.com/hackerspainters/facebook"
 	"html/template"
+
+	"labix.org/v2/mgo"
 	"labix.org/v2/mgo/bson"
+
+	"github.com/hackerspainters/facebook"
 
 	"hp/conf"
 	"hp/db"
@@ -94,19 +98,27 @@ func EventPastHandler(w http.ResponseWriter, req *http.Request) {
 }
 
 // This handler renders the event on the upcoming Friday
-func EventNextHandler(w http.ResponseWriter, req *http.Request) {
+func EventNextHandler(w http.ResponseWriter, r *http.Request) {
 
-	var event *Event
 	search := bson.M{"data.start_time": bson.M{"$gte": time.Now()}}
 	sort := "data.start_time"
-	err := db.Find(event, search).Sort(sort).One(&event)
-	if err != nil {
+	var result *Event
+	err := db.Find(&Event{}, search).Sort(sort).One(&result)
+	if err != nil && err != mgo.ErrNotFound {
 		panic(err)
 	}
+	if err == mgo.ErrNotFound {
+		fmt.Println("No such object in db. Redirect")
+		http.Redirect(w, r, "/404/", http.StatusFound)
+		return
+	}
 
+	// TODO: 
+	// This is the absolute path parsing of template files so tests will pass
+	// Code can be better organized
 	var eventnext = template.Must(template.ParseFiles(
-		"templates/_base.html",
-		"templates/event_next.html",
+		path.Join(conf.Config.ProjectRoot, "templates/_base.html"),
+		path.Join(conf.Config.ProjectRoot, "templates/event_next.html"),
 	))
 
 	type templateData struct {
@@ -114,7 +126,7 @@ func EventNextHandler(w http.ResponseWriter, req *http.Request) {
 		E *Event
 	}
 
-	data := templateData{conf.DefaultContext(conf.Config), event}
+	data := templateData{conf.DefaultContext(conf.Config), result}
 
 	eventnext.Execute(w, data)
 
