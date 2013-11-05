@@ -127,6 +127,7 @@ func main() {
 	handleFuncPrefix(r, "/facebook/login/", FacebookLoginHandler)
 
 	handleFuncPrefix(r, "/users/", user.UsersHandler)
+	handleFuncPrefix(r, "/organise/", event.OrganiseHandler)
 	handleFuncPrefix(r, "/events/", event.EventListHandler)
 	handleFuncPrefix(r, "/events/next/", event.EventNextHandler)
 	handleFuncPrefix(r, "/events/past/", event.EventPastHandler)
