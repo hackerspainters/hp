@@ -147,6 +147,23 @@ func EventNextHandler(w http.ResponseWriter, r *http.Request) {
 
 }
 
+func OrganiseHandler(w http.ResponseWriter, r *http.Request) {
+
+	var organise = template.Must(template.ParseFiles(
+		path.Join(conf.Config.ProjectRoot, "templates/_base.html"),
+		path.Join(conf.Config.ProjectRoot, "templates/organise.html"),
+	))
+
+	type templateData struct {
+		Context *conf.Context
+	}
+
+	data := templateData{conf.DefaultContext(conf.Config)}
+
+	organise.Execute(w, data)
+
+}
+
 func EventGrabHandler(w http.ResponseWriter, req *http.Request) {
 
 	var eventgrab = template.Must(template.ParseFiles(
@@ -176,10 +193,20 @@ func EventImportHandler(w http.ResponseWriter, r *http.Request) {
 
 	events := facebook.GetGroupEvents(&MyToken, conf.Config.FacebookGroupId)
 	event_ids := facebook.GetGroupEventIds(events)
-	//event := NewEvent()
+	updateEventDetails(event_ids, &MyToken)
+
+	// one-off implementation to also grab event details in the `General Hackers` group
+    generalhackers := facebook.GetGroupEvents(&MyToken, "314660778669731")
+	generalhackers_ids := facebook.GetGroupEventIds(generalhackers)
+	updateEventDetails(generalhackers_ids, &MyToken)
+
+}
+
+// helper function which updates the events given a slice of event ids (string) and the token
+func updateEventDetails(event_ids []string, token *facebook.AccessToken) {
 
 	for i := 0; i < len(event_ids); i++ {
-		e := facebook.GetEvent(&MyToken, event_ids[i])
+		e := facebook.GetEvent(token, event_ids[i])
 
 		var result *Event
 		err := db.Find(&Event{}, bson.M{"eid": e.Id}).One(&result)
