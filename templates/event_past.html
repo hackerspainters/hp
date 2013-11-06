@@ -6,62 +6,20 @@
 	<h2 class="post-title">Past Events</h2>
 </header>
 
-<!-- List all past events and stuff them into mongodb to be retrieved dynamically -->
-
-<article class="post tag-mots tag-responsive">
-
-	<header class="post-header">
-		<h3>Neo4J database by Rishi Gupta</h3>
-		<span class="post-meta">
-			<time datetime="2013-08-30">30 Aug 2013</time>
-		</span>
-
-	</header>
-
-	<section class="post-excerpt">
-		<p>
-			Neo4j is a robust (fully ACID) transactional property graph database. Due to its graph data model, Neo4j is highly agile and blazing fast. For connected data operations, Neo4j runs a thousand times faster than relational databases.
-		</p>
-	</section>
-
-</article>
-
-
-<article class="post tag-mots tag-responsive">
-
-	<header class="post-header">
-		<h3>Elixir Language by Chang Sau Sheong</h3>
-		<span class="post-meta">
-			<time datetime="2013-08-23">23 Aug 2013</time>
-		</span>
-
-	</header>
-
-	<section class="post-excerpt">
-		<p>
-		Elixir is a functional, meta-programming aware language built on top of the Erlang VM. It is a dynamic language with flexible syntax and macro support that leverages Erlang's abilities to build concurrent, distributed and fault-tolerant applications with hot code upgrades.
-		</p>
-	</section>
-
-</article>
-
-<article class="post tag-mots tag-responsive">
-
-	<header class="post-header">
-		<h3>Elastic Search by Ivan Zimine</h3>
-		<span class="post-meta">
-			<time datetime="2013-08-16">16 Aug 2013</time>
-		</span>
-
-	</header>
-
-	<section class="post-excerpt">
-		<p>
-			Elastic Search is flexible and powerful open source, distributed real-time search and analytics engine for the cloud.
-		</p>
-		<p>Ivan Zimine will share with us how to use it for your project</p>
-	</section>
-
-</article>
+	{{ range .Events }}
+	<article class="post tag-mots tag-responsive">
+		<header class="post-header">
+			<h3>{{ .Data.Name }}</h3>
+			<span class="post-meta">
+				<time datetime='{{ .Data.StartTime.Format "2006-1-2" }}'>{{ .Data.StartTime.Format "Mon, 2 Jan 2006 @ 15:04" }}</time>
+			</span>
+		</header>
+		<section class="post-excerpt">
+			<p>
+				{{ .Data.Description }}
+			</p>
+		</section>
+	</article>
+	{{ end }}
 
 {{ end }}
