@@ -121,6 +121,7 @@ func main() {
 
 	// Routing with Gorilla Mux
 	r := mux.NewRouter()
+	r.StrictSlash(true)
 	handleFuncPrefix(r, "/", HomeHandler)
 	handleFuncPrefix(r, "/404/", NotFoundHandler)
 	handleFuncPrefix(r, "/channel.html", FacebookChannelHandler)

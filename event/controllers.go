@@ -93,10 +93,24 @@ func EventListHandler(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func EventPastHandler(w http.ResponseWriter, req *http.Request) {
+func EventPastHandler(w http.ResponseWriter, r *http.Request) {
 
-	// TODO: implement db.Find to retrieve data dynamically
+	search := bson.M{"data.start_time": bson.M{"$lte": time.Now()}}
+	sort := "-data.start_time"
+	var results []Event
+	err := db.Find(&Event{}, search).Sort(sort).All(&results)
+	if err != nil && err != mgo.ErrNotFound {
+		panic(err)
+	}
+	if err == mgo.ErrNotFound {
+		fmt.Println("No such object in db. Redirect")
+		http.Redirect(w, r, "/404/", http.StatusFound)
+		return
+	}
 
+	// TODO: 
+	// This is the absolute path parsing of template files so tests will pass
+	// Code can be better organized
 	var eventpast = template.Must(template.ParseFiles(
 		path.Join(conf.Config.ProjectRoot, "templates/_base.html"),
 		path.Join(conf.Config.ProjectRoot, "templates/event_past.html"),
@@ -104,9 +118,10 @@ func EventPastHandler(w http.ResponseWriter, req *http.Request) {
 
 	type templateData struct {
 		Context *conf.Context
+		Events []Event
 	}
 
-	data := templateData{conf.DefaultContext(conf.Config)}
+	data := templateData{conf.DefaultContext(conf.Config), results}
 
 	eventpast.Execute(w, data)
 
