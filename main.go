@@ -12,6 +12,7 @@ import (
 	"hp/db"
 	"hp/event"
 	"hp/user"
+	"hp/auth"
 )
 
 func ExampleIncr(x float64) float64 {
@@ -124,10 +125,13 @@ func main() {
 	r.StrictSlash(true)
 	handleFuncPrefix(r, "/", HomeHandler)
 	handleFuncPrefix(r, "/404/", NotFoundHandler)
+
 	handleFuncPrefix(r, "/channel.html", FacebookChannelHandler)
 	handleFuncPrefix(r, "/facebook/login/", FacebookLoginHandler)
 
 	handleFuncPrefix(r, "/users/", user.UsersHandler)
+	handleFuncPrefix(r, "/login/", auth.LoginHandler)
+
 	handleFuncPrefix(r, "/organise/", event.OrganiseHandler)
 	handleFuncPrefix(r, "/events/", event.EventListHandler)
 	handleFuncPrefix(r, "/events/next/", event.EventNextHandler)
