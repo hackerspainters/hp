@@ -488,6 +488,10 @@ pre {
 	font-size: 1.2em;
 }
 
+.blog-social li a {
+	text-decoration: none;
+}
+
 .clean-ul {
 	list-style-type: none;
 	padding-left: 10px;

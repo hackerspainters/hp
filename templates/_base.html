@@ -12,9 +12,9 @@
 		<link rel="stylesheet" type="text/css" href="{{ .Context.HttpPrefix }}/static/css/style.css" />
 		<link href='http://fonts.googleapis.com/css?family=Abril+Fatface' rel='stylesheet' type='text/css'>
 		<link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,900,300italic,400italic,600italic,700italic,900italic" rel="stylesheet" type="text/css">
-		<link rel="stylesheet" href="{{ .Context.HttpPrefix }}/static/font-awesome/css/font-awesome.min.css">
+		<link rel="stylesheet" href="{{ .Context.HttpPrefix }}/static/font-awesome-4.0.3/css/font-awesome.min.css">
 		<!--[if IE 7]>
-		<link rel="stylesheet" href="{{ .Context.HttpPrefix }}/static/font-awesome/css/font-awesome-ie7.min.css">
+		<link rel="stylesheet" href="{{ .Context.HttpPrefix }}/static/font-awesome-4.0.3/css/font-awesome-ie7.min.css">
 		<![endif]-->
 		<!--[if lt IE 9]>
 		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -33,10 +33,6 @@
 				FB.init({
 					appId 		: '{{ .Context.FacebookAppId }}',
 					channelUrl 	: '{{ .Context.FacebookChannelUrl }}',
-
-					//appId      : '521976014544775',                    // App ID from the app dashboard
-					//channelUrl : '//hackersandpainters.sg/channel.html', // Channel file for x-domain comms
-
 					status     : true,                                 // Check Facebook Login status
 					xfbml      : true                                  // Look for social plugins on the page
 				});
@@ -86,33 +82,41 @@
 					<ul class="clearfix">
 						<li>
 							<a href="https://www.facebook.com/groups/hackerspainters" target="_blank">
-								<span class="icon-stack">
-									<i class="icon-circle icon-stack-base"></i>
-									<i class="icon-facebook icon-light"></i>
+								<span class="fa-stack fa-lg">
+									<i class="fa fa-circle fa-stack-2x"></i>
+									<i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
 								</span>
 							</a>
 						</li>
 						<li>
 							<a href="https://twitter.com/hackerspainters" target="_blank">
-								<span class="icon-stack">
-									<i class="icon-circle icon-stack-base"></i>
-									<i class="icon-twitter icon-light"></i>
+								<span class="fa-stack fa-lg">
+									<i class="fa fa-circle fa-stack-2x"></i>
+									<i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
 								</span>
 							</a>
 						</li>
 						<li>
 							<a href="https://plus.google.com/u/0/b/105855420164914868165/105855420164914868165/posts/p/pub" target="_blank">
-								<span class="icon-stack">
-									<i class="icon-circle icon-stack-base"></i>
-									<i class="icon-google-plus icon-light"></i>
+								<span class="fa-stack fa-lg">
+									<i class="fa fa-circle fa-stack-2x"></i>
+									<i class="fa fa-google-plus fa-stack-1x fa-inverse"></i>
 								</span>
 							</a>
 						</li>
 						<li>
 							<a href="https://github.com/hackerspainters/" target="_blank">
-								<span class="icon-stack">
-									<i class="icon-circle icon-stack-base"></i>
-									<i class="icon-github icon-light"></i>
+								<span class="fa-stack fa-lg">
+									<i class="fa fa-circle fa-stack-2x"></i>
+									<i class="fa fa-github fa-stack-1x fa-inverse"></i>
+								</span>
+							</a>
+						</li>
+						<li>
+							<a href="/login/">
+								<span class="fa-stack fa-lg">
+									<i class="fa fa-circle fa-stack-2x"></i>
+									<i class="fa fa-unlock fa-stack-1x fa-inverse"></i>
 								</span>
 							</a>
 						</li>

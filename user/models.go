@@ -17,6 +17,16 @@ type User struct {
 	Active    bool // if false, user cannot log in
 	Admin     bool // for restriction to admin-specific management pages subsequently
 	Timestamp time.Time
+
+	Facebook struct {
+		Id            string
+		Name          string
+		FirstName     string
+		LastName      string
+		Link          string
+        Gender        string
+        Email          string
+    }
 }
 
 // implementations for the User struct.
