@@ -9,9 +9,12 @@ before_install:
   - export GOPATH=$HOME/gopath:$GOPATH
   - mkdir -p $HOME/gopath/src/hp
   - echo $TRAVIS_BUILD_DIR
-  - cp -r $TRAVIS_BUILD_DIR $HOME/gopath/src/hp
+  - cp -r $TRAVIS_BUILD_DIR $HOME/gopath/src/
   - export TRAVIS_BUILD_DIR=$HOME/gopath/src/hp
+  - echo $TRAVIS_BUILD_DIR
   - cd $HOME/gopath/src/hp
+  - pwd
+  - ls -la
 
 script:
  - go test -v ./...
