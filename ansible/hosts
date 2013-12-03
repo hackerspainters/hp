@@ -1,0 +1,2 @@
+[production]
+hackersandpainters.sg nickname=production vm=0 branch=master ansible_python_interpreter=/usr/local/bin/python
