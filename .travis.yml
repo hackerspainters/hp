@@ -1,9 +1,19 @@
+services:
+ - mongodb
+
 language: go
 go: 
  - 1.1
  - 1.2
  - release
  - tip
+
+before_install:
+  - export GOPATH=$HOME/gopath:$GOPATH
+  - mkdir -p $HOME/gopath/src/hp
+  - cp -r $TRAVIS_BUILD_DIR $HOME/gopath/src/
+  - export TRAVIS_BUILD_DIR=$HOME/gopath/src/hp
+  - cd $HOME/gopath/src/hp
 
 script:
  - go test -v ./...
