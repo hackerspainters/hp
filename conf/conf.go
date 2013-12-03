@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"os"
 	"path"
-	"runtime"
 
 	"bitbucket.org/kardianos/osext"
 )
@@ -112,8 +111,7 @@ func init() {
 		projRoot = path.Dir(exename)
 	}
 
-	_, filename, _, _ := runtime.Caller(1)
-	Path = path.Join(path.Dir(filename), "../config.json")
+	Path = path.Join(projRoot, "config.json")
 
 	file, err := os.Open(Path)
 	if err != nil {
@@ -121,8 +119,6 @@ func init() {
 			fmt.Printf("Error: could not read config file %s.\n", Path)
 		}
 		return
-	} else {
-		Config.ProjectRoot = projRoot
 	}
 
 	decoder := json.NewDecoder(file)
