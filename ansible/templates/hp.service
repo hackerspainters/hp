@@ -1,0 +1,12 @@
+[Unit]
+Description=hackersandpainters.sg initialization
+
+[Service]
+PIDFile=/tmp/hp.pid-5050
+User=web
+Group=web
+WorkingDirectory=/home/web/hp/src/hp
+ExecStart=/bin/bash -c 'source ~/hp/sourceme.bash; hp'
+
+[Install]
+WantedBy=multi-user.target

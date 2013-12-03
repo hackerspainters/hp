@@ -1,0 +1,20 @@
+---
+- hosts: production
+  user: web
+  vars_files:
+    - vars.yml
+
+  tasks:
+
+  - name: Pull sources from the repository.
+    git: repo=${project_repo} dest=${project_root}/hp/src/hp
+
+  - name: Get any dependencies 
+    shell: source ${project_root}/hp/sourceme.bash; go get hp chdir=${project_root}/hp/src/hp
+
+  - name: Build the binary
+    shell: source ${project_root}/hp/sourceme.bash; go install hp chdir=${project_root}/hp/src/hp
+
+  - name: Restart golang app
+    sudo: True
+    action: command /usr/bin/systemctl restart hp 
