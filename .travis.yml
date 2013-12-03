@@ -5,5 +5,12 @@ go:
  - release
  - tip
 
+before_install:
+  - export GOPATH=$HOME/gopath:$GOPATH
+  - mkdir -p $HOME/gopath/src/hp
+  - cp -r $TRAVIS_BUILD_DIR $HOME/gopath/src/hp
+  - export TRAVIS_BUILD_DIR=$HOME/gopath/src/hp
+  - cd $HOME/gopath/src/hp
+
 script:
  - go test -v ./...
