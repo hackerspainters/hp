@@ -5,7 +5,7 @@ Description=hackersandpainters.sg initialization
 PIDFile=/tmp/hp.pid-5050
 User=web
 Group=web
-WorkingDirectory=/home/web/hp/src/hp
+WorkingDirectory=/home/web/hp/bin
 ExecStart=/bin/bash -c 'source ~/hp/sourceme.bash; hp'
 
 [Install]

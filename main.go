@@ -5,6 +5,7 @@ import (
 	"html/template"
 	"net/http"
 	"reflect"
+	"path"
 
 	"github.com/gorilla/mux"
 
@@ -23,9 +24,13 @@ func HomeHandler(w http.ResponseWriter, req *http.Request) {
 	// homepage controller
 
 	var index = template.Must(template.ParseFiles(
-		"templates/_base.html",
-		"templates/index.html",
+		path.Join(conf.Config.TemplatePaths[0], "_base.html"),
+		path.Join(conf.Config.TemplatePaths[0], "index.html"),
 	))
+	//var index = template.Must(template.ParseFiles(
+		//"templates/_base.html",
+		//"templates/index.html",
+	//))
 
 	type templateData struct {
 		Context *conf.Context
@@ -41,8 +46,8 @@ func HomeHandler(w http.ResponseWriter, req *http.Request) {
 func NotFoundHandler(w http.ResponseWriter, req *http.Request) {
 
 	var notfound = template.Must(template.ParseFiles(
-		"templates/_base.html",
-		"templates/404.html",
+		path.Join(conf.Config.TemplatePaths[0], "_base.html"),
+		path.Join(conf.Config.TemplatePaths[0], "404.html"),
 	))
 
 	type templateData struct {
@@ -60,7 +65,7 @@ func NotFoundHandler(w http.ResponseWriter, req *http.Request) {
 func FacebookChannelHandler(w http.ResponseWriter, req *http.Request) {
 
 	var fbchannel = template.Must(template.ParseFiles(
-		"templates/channel.html",
+		path.Join(conf.Config.TemplatePaths[0], "channel.html"),
 	))
 
 	type templateData struct {
@@ -77,8 +82,8 @@ func FacebookLoginHandler(w http.ResponseWriter, req *http.Request) {
 	// simple static page for user to click on fb connect button
 
 	var fblogin = template.Must(template.ParseFiles(
-		"templates/_base.html",
-		"templates/facebook_login.html",
+		path.Join(conf.Config.TemplatePaths[0], "_base.html"),
+		path.Join(conf.Config.TemplatePaths[0], "facebook_login.html"),
 	))
 
 	type templateData struct {

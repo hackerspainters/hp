@@ -23,8 +23,8 @@ func EventAddHandler(w http.ResponseWriter, req *http.Request) {
 	// TODO: implement check to ensure user submitted event provides an email
 
 	var eventadd = template.Must(template.ParseFiles(
-		path.Join(conf.Config.ProjectRoot, "templates/_base.html"),
-		path.Join(conf.Config.ProjectRoot, "templates/event_add.html"),
+		path.Join(conf.Config.TemplatePaths[0], "_base.html"),
+		path.Join(conf.Config.TemplatePaths[0], "event_add.html"),
 	))
 
 	type templateData struct {
@@ -78,8 +78,8 @@ func EventListHandler(w http.ResponseWriter, r *http.Request) {
 	// This is the absolute path parsing of template files so tests will pass
 	// Code can be better organized
 	var eventlist = template.Must(template.ParseFiles(
-		path.Join(conf.Config.ProjectRoot, "templates/_base.html"),
-		path.Join(conf.Config.ProjectRoot, "templates/event_list.html"),
+		path.Join(conf.Config.TemplatePaths[0], "_base.html"),
+		path.Join(conf.Config.TemplatePaths[0], "event_list.html"),
 	))
 
 	type templateData struct {
@@ -112,8 +112,8 @@ func EventPastHandler(w http.ResponseWriter, r *http.Request) {
 	// This is the absolute path parsing of template files so tests will pass
 	// Code can be better organized
 	var eventpast = template.Must(template.ParseFiles(
-		path.Join(conf.Config.ProjectRoot, "templates/_base.html"),
-		path.Join(conf.Config.ProjectRoot, "templates/event_past.html"),
+		path.Join(conf.Config.TemplatePaths[0], "_base.html"),
+		path.Join(conf.Config.TemplatePaths[0], "event_past.html"),
 	))
 
 	type templateData struct {
@@ -147,8 +147,8 @@ func EventNextHandler(w http.ResponseWriter, r *http.Request) {
 	// This is the absolute path parsing of template files so tests will pass
 	// Code can be better organized
 	var eventnext = template.Must(template.ParseFiles(
-		path.Join(conf.Config.ProjectRoot, "templates/_base.html"),
-		path.Join(conf.Config.ProjectRoot, "templates/event_next.html"),
+		path.Join(conf.Config.TemplatePaths[0], "_base.html"),
+		path.Join(conf.Config.TemplatePaths[0], "event_next.html"),
 	))
 
 	type templateData struct {
@@ -165,8 +165,8 @@ func EventNextHandler(w http.ResponseWriter, r *http.Request) {
 func OrganiseHandler(w http.ResponseWriter, r *http.Request) {
 
 	var organise = template.Must(template.ParseFiles(
-		path.Join(conf.Config.ProjectRoot, "templates/_base.html"),
-		path.Join(conf.Config.ProjectRoot, "templates/organise.html"),
+		path.Join(conf.Config.TemplatePaths[0], "_base.html"),
+		path.Join(conf.Config.TemplatePaths[0], "organise.html"),
 	))
 
 	type templateData struct {
@@ -182,8 +182,8 @@ func OrganiseHandler(w http.ResponseWriter, r *http.Request) {
 func EventGrabHandler(w http.ResponseWriter, req *http.Request) {
 
 	var eventgrab = template.Must(template.ParseFiles(
-		"templates/_base.html",
-		"templates/event_grab.html",
+		path.Join(conf.Config.TemplatePaths[0], "_base.html"),
+		path.Join(conf.Config.TemplatePaths[0], "event_grab.html"),
 	))
 
 	type templateData struct {
