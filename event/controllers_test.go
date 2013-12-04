@@ -1,7 +1,7 @@
 package event
 
 import (
-	//"fmt"
+	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -19,6 +19,7 @@ func TestEventNextHandler(t *testing.T) {
 
 	// set up test database
 
+	fmt.Println("testing EventNext")
 	db.Connect("127.0.0.1", "test_db")
 	db.RegisterAllIndexes()
 

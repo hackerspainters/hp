@@ -111,6 +111,7 @@ func init() {
 		projRoot = path.Dir(exename)
 	}
 
+	Config.ProjectRoot = projRoot  // set ProjectRoot config which is used for template loading
 	Path = path.Join(projRoot, "config.json")
 
 	file, err := os.Open(Path)
