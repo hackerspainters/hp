@@ -6,7 +6,7 @@ PIDFile=/tmp/hp.pid-5050
 User=web
 Group=web
 WorkingDirectory=/home/web/hp/bin
-ExecStart=/bin/bash -c 'source ~/hp/sourceme.bash; hp'
+ExecStart=/bin/bash -c 'source ~/hp/sourceme.bash; export PROJ_CONFIG_PATH=/home/web/hp/src/hp; hp'
 
 [Install]
 WantedBy=multi-user.target

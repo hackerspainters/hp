@@ -2,7 +2,6 @@ package db
 
 import (
 	"fmt"
-	"hp/conf"
 	"labix.org/v2/mgo"
 	"labix.org/v2/mgo/bson"
 )
@@ -102,5 +101,5 @@ func Connect(url, database string) {
 		RegisterIndexes(m)
 	}
 
-	fmt.Printf("Connected to mongodb on %s, using \"%s\"\n", url, conf.Config.DbName)
+	fmt.Printf("Connected to mongodb on %s, using \"%s\"\n", url, database)
 }
