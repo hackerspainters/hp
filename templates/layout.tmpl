@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+
+	    <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="HandheldFriendly" content="True">
+		<meta name="MobileOptimized" content="320">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <meta name="generator" content="golang blog" />
+
+		<link rel="stylesheet" type="text/css" href="/css/style.css" />
+		<link href='http://fonts.googleapis.com/css?family=Abril+Fatface' rel='stylesheet' type='text/css'>
+		<link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,900,300italic,400italic,600italic,700italic,900italic" rel="stylesheet" type="text/css">
+		<link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+		<!--[if IE 7]>
+		<link rel="stylesheet" href="/font-awesome/css/font-awesome-ie7.min.css">
+		<![endif]-->
+		<!--[if lt IE 9]>
+		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+		
+        <title>Hackers & Painters</title>
+
+    </head>
+
+    <body class="home-template">
+
+		<!-- facebook integration with javascript, requires facebook.js -->
+		<div id="fb-root"></div>
+		<script>
+			window.fbAsyncInit = function() {
+				// init the FB JS SDK
+				FB.init({
+					appId 		: 'FacebookAppId',
+					channelUrl 	: 'FacebookChannelUrl',
+
+					//appId      : '521976014544775',                    // App ID from the app dashboard
+					//channelUrl : '//hackersandpainters.sg/channel.html', // Channel file for x-domain comms
+
+					status     : true,                                 // Check Facebook Login status
+					xfbml      : true                                  // Look for social plugins on the page
+				});
+
+				// Additional initialization code such as adding Event Listeners goes here
+
+				FB.Event.subscribe('auth.authResponseChange', function(response) {
+					if (response.status === 'connected') {
+						var token = response.authResponse.accessToken
+						var fbuid = response.authResponse.userID
+      var expiresIn = response.authResponse.expiresIn
+						document.getElementById("message").innerHTML +=  "<br>Connected to Facebook";
+						displayUser()
+						getGroupEvents(fbuid, ' .Context.FacebookGroupId }}', token, expiresIn)
+
+						//$("#status").html("Connected " + result.name)
+						//SUCCESS
+
+					} else if (response.status === 'not_authorized') {
+						document.getElementById("message").innerHTML +=  "<br>Failed to Connect";
+						$("#status").html("Not connected (1)")
+						//FAILED
+					} else {
+						document.getElementById("message").innerHTML +=  "<br>Logged Out";
+						$("#status").html("Not connected (2)")
+						//UNKNOWN ERROR
+					}
+				});	
+
+			};
+		</script>
+
+		<div id="wrapper">
+
+			<aside id="sidebar" role="complementary" style="background-image: url(/img/blog_cover-1.jpg)">
+				<div class="blog-logo">
+
+					<!--<a href="/" title="mots."><img src="/img/logo_mots.png" alt="mots." /></a>-->
+					<a href="/">Hackers & Painters</a>
+
+				</div>
+
+				<div class="blog-description"><p>Lightning Knowledge Sharing @ Lunch</p></div>
+
+				<div class="blog-social">
+					<p>Follow Hackers and Painters.</p>
+					<ul class="clearfix">
+						<li>
+							<a href="https://www.facebook.com/groups/hackerspainters" target="_blank">
+								<span class="icon-stack">
+									<i class="icon-circle icon-stack-base"></i>
+									<i class="icon-facebook icon-light"></i>
+								</span>
+							</a>
+						</li>
+						<li>
+							<a href="https://twitter.com/hackerspainters" target="_blank">
+								<span class="icon-stack">
+									<i class="icon-circle icon-stack-base"></i>
+									<i class="icon-twitter icon-light"></i>
+								</span>
+							</a>
+						</li>
+						<li>
+							<a href="https://plus.google.com/u/0/b/105855420164914868165/105855420164914868165/posts/p/pub" target="_blank">
+								<span class="icon-stack">
+									<i class="icon-circle icon-stack-base"></i>
+									<i class="icon-google-plus icon-light"></i>
+								</span>
+							</a>
+						</li>
+						<li>
+							<a href="https://github.com/hackerspainters/" target="_blank">
+								<span class="icon-stack">
+									<i class="icon-circle icon-stack-base"></i>
+									<i class="icon-github icon-light"></i>
+								</span>
+							</a>
+						</li>
+					</ul>
+				</div>
+
+				<div>
+					<h2>Schedule</h2>
+					<ul class="clean-ul">
+						<li>
+							<a href="/events/next/">This coming Friday</a>
+						</li>
+						<li>
+							<a href="/events/">Upcoming</a>
+						</li>
+						<li>
+							<a href="/events/past/">Past</a>
+						</li>
+					</ul>
+				</div>
+
+			</aside>
+
+			<main id="content" role="main">
+
+				<div class="inner list-posts">
+					
+					{{ yield }}
+
+					<footer class="site-footer clearfix">
+
+						<div class="copyright">
+							<section class="copyright">Copyright <a href="/">Hackers and Painters.</a> 
+								&copy; 2013 &bull; All rights reserved.
+							</section>
+							<section>
+								<a href="/organise/">
+									Start a session at your venue.
+								</a>
+							</section>
+							<section class="poweredby">
+								Site built with <a href="http://golang.org" target="_blank">Golang</a>.
+							</section>
+						</div>
+
+					</footer>
+
+				</div>
+
+			</main>
+
+		</div><!-- END #wrapper -->
+
+  <script src="/js/jquery.js"></script>
+  <script src="/js/plugins.min.js"></script>
+		<script src="/js/mots.js"></script>
+		<script src="/js/facebook.js"></script>
+
+		<!-- Google Analytics -->
+		<script>
+		  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+		  ga('create', 'UA-45117966-1', 'hackersandpainters.sg');
+		  ga('send', 'pageview');
+
+		</script>
+
+    </body>
+
+</html>

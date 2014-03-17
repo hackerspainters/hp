@@ -1,0 +1,23 @@
+<article class="post tag-mots tag-responsive">
+
+	<header class="post-header">
+		<h2 class="post-title">This coming Friday</h2>
+	</header>
+
+	{{ range .Events }}
+	<section class="post-excerpt">
+		<h3>{{ .Data.Name }}</h3>
+		<span class="post-meta">
+			<time datetime='{{ .Data.StartTime.Format "2006-1-2" }}'>{{ .Data.StartTime.Format "Mon, 2 Jan 2006 @ 15:04" }}</time>
+		</span>
+		<br /> 
+		<span class="post-meta">
+			Venue: {{ .Data.Location }}
+		</span>
+		<p>
+			{{ .Data.Description }}
+		</p>
+	</section>
+	{{ end }}
+
+</article>

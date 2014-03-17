@@ -1,0 +1,573 @@
+/*
+Document info
+-------------------------------
+
+Author: QBKL
+Website: http://qbkl.net
+Themeforest: http://themeforest.net/user/QBKL
+Facebook: http://www.facebook.com/QBKLstudio
+Twitter: http://twitter.com/qbkl
+
+Accent color: #1abc9c
+Sidebar background color: #16a085
+Fonts: Abril Fatface, Source Sans Pro
+
+
+Table of contents
+-------------------------------
+0. Imports
+1. Globals
+2. Structure
+3. Content
+	3.1. Post
+	3.2. Post Footer
+	3.3. Pagination
+	3.4. Form Elements
+	3.5. Typography and more
+4. Sidebar
+5. Footer
+6. Media Queries
+*/
+
+/* 0. Imports */
+
+@import url(normalize.css);
+
+/* 1. Globals */
+
+html, body {
+	width: 100%;
+	height: 100%;
+}
+
+body {
+	margin: 0 auto;
+	font-family: 'Source Sans Pro', 'Helvetica Neue', 'Helvetica', Arial, sans-serif;
+	font-size: 18px;
+	background-color: #fff;
+	color: #444;
+}
+
+a {
+	color: #1abc9c;
+	outline: none;
+}
+
+a:hover {
+	color: #000;
+	transition: color ease 0.3s;
+}
+
+a img {
+	border: 0;
+}
+
+img {
+	max-width: 100%;
+	height: auto;
+}
+
+.clearfix:before,
+.clearfix:after {
+	content: " ";
+	display: table;
+}
+
+.clearfix:after {
+	clear: both;
+}
+
+/* 2. Structure */
+
+#wrapper {
+	width: 100%;
+	height: 100%;
+	position: relative;
+}
+
+#content {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 25%;
+	height: 100%;
+	margin: 0 auto;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing:	border-box;
+	box-sizing:			border-box;
+	z-index: 10;
+}
+
+.inner {
+	width: 90%;
+	max-width: 660px;
+	margin: 0 auto;
+	padding: 50px 0;
+}
+
+#sidebar {
+	position: fixed;
+	width: 25%;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	padding: 50px 30px;
+	font-weight: normal;
+	color: #fff;
+	background-color: #16a085;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing:	border-box;
+	box-sizing:			border-box;
+
+	-webkit-filter: grayscale(100%);
+	-moz-filter: 	grayscale(100%);
+	-ms-filter: 	grayscale(100%);
+	-o-filter: 		grayscale(100%);
+	filter: 		grayscale(100%);
+	filter: 		gray; /* IE 6-9 */
+	filter: 		url(grayscale.svg); /* Firefox 4+ */
+	filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale"); /* Firefox 3.5+ */
+}
+
+#sidebar:hover {
+	-webkit-filter: grayscale(0%);
+	-moz-filter: 	grayscale(0%);
+	-ms-filter: 	grayscale(0%);
+	-o-filter: 		grayscale(0%);
+	filter: 		none;
+}
+
+/* 3. Content */
+
+/* 3.1. Post */
+
+article.post {
+	word-break: break-word;
+	hyphens: auto;
+	padding-bottom: 51px;
+	margin-bottom: 50px;
+	background: url(../img/line.png) no-repeat bottom left;
+}
+
+.post-header {
+	margin-bottom: 30px;
+}
+
+.post-title {
+	margin: 0 0 0.3em 0;
+	padding: 0;
+	font-family: 'Abril Fatface', Georgia, serif;
+	font-size: 3em;
+	font-weight: 400;
+	line-height: 1em;
+	color: #000;
+}
+
+.post-title a {
+	color: #000;
+	text-decoration: none;
+}
+
+.post-title a:hover {
+	color: #888;
+}
+
+.post-meta {
+	font-size: 0.778em;
+	text-transform: uppercase;
+	letter-spacing: 0.02em;
+	color: #888;
+}
+
+.post-excerpt p:last-child, .post-content p:last-child {
+	margin-bottom: 0;
+}
+
+/* 3.2. Post Footer */
+
+.post-footer {
+	margin-top: 50px;
+}
+
+.post-social ul {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+	color: #888;
+	font-size: 0.778em;
+	line-height: 1em;
+}
+
+.post-social li {
+	float: left;
+	margin-right: 10px;
+}
+
+.post-social li span.icon-stack {
+	font-size: 1.2em;
+}
+
+.post-author {
+	margin-top: 50px;
+	padding-top: 51px;
+	background: url(../img/line.png) no-repeat top left;
+}
+
+.author-image {
+	float: left;
+	width: 100px;
+	height: 100px;
+	margin-right: 30px;
+	overflow: hidden;
+
+	-webkit-border-radius: 50%;
+	-moz-border-radius: 50%;
+	border-radius: 50%;
+
+	-webkit-filter: grayscale(100%);
+	-moz-filter: 	grayscale(100%);
+	-ms-filter: 	grayscale(100%);
+	-o-filter: 		grayscale(100%);
+	filter: 		grayscale(100%);
+	filter: 		url(grayscale.svg); /* Firefox 4+ */
+	filter: 		gray; /* IE 6-9 */
+}
+
+.author-name {
+	font-size: 1em;
+	margin: 0 0 1em 0;
+	color: #000;
+}
+
+.author-bio {
+	margin: 0;
+	font-size: 0.778em;
+	color: #888;
+}
+
+/* 3.3. Pagination */
+
+.pagination {
+	position: relative;
+	margin-bottom: 50px;
+	font-family: Georgia, serif;
+	font-size: 1.333em;
+	letter-spacing: -1px;
+	display: block;
+	text-align: center;
+	color: #888;
+}
+
+.pagination a {
+	text-decoration: none;
+	color: #888;
+	font-weight: bold;
+}
+
+.pagination a:hover {
+	color: #000;
+}
+
+.pagination a.page-prev {
+	position: absolute;
+	left: 0;
+}
+
+.pagination a.page-next {
+	position: absolute;
+	right: 0;
+}
+
+/* 3.4. Form Elements */
+
+form:before,
+form:after {
+	content: " ";
+	display: table;
+}
+
+form:after {
+	clear: both;
+}
+
+input[type="text"], input[type="url"], input[type="password"], input[type="url"], textarea {
+	font-family: inherit;
+	font-size: 1em;
+	width: 96%;
+	padding: 0 2%;
+	height: 40px;
+	line-height: 40px;
+	font-size: 1em;
+	background-color: #dddddd;
+	border: 0;
+	-webkit-border-radius: 	5px;
+	-moz-border-radius: 	5px;
+	border-radius: 			5px;
+	resize: none;
+}
+
+textarea {
+	height: auto;
+	line-height: 1.4em;
+	padding: 2%;
+}
+
+label {
+	display: block;
+	text-transform: uppercase;
+	margin-bottom: 10px;
+	font-style: italic;
+}
+
+.button {
+	display: inline-block;
+	color: #ffffff;
+	background-color: #1abc9c;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: none;
+	text-transform: uppercase;
+	text-decoration: none;
+	letter-spacing: 0.15em;
+	cursor: pointer;
+}
+
+.button:hover {
+	color: #ffffff;
+	background-color: #000000;
+	-webkit-transition: background-color 300ms linear;
+	-moz-transition: 	background-color 300ms linear;
+	-o-transition: 		background-color 300ms linear;
+	-ms-transition: 	background-color 300ms linear;
+	transition: 		background-color 300ms linear;
+}
+
+.button-small {
+	padding: 5px 10px;
+	font-size: 0.875em;
+}
+
+.button-medium {
+	padding: 10px 15px;
+	font-size: 1em;
+}
+
+.button-large {
+	padding: 15px 20px;
+	font-size: 1.125em;
+}
+
+/* 3.5. Typography and more */
+
+hr {
+    display: block;
+    height: 1px;
+    margin: 3.2em 0;
+    padding: 0;
+    border: 0;
+    border-top: 1px solid #cccccc;
+}
+
+blockquote {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: 	border-box;
+    margin: 1.6em 0;
+    padding: 0 0 0 1.6em;
+    border-left: #1abc9c 5px solid;
+}
+
+blockquote p {
+    margin: 0.8em 0;
+    font-style: italic;
+}
+
+blockquote small {
+    display: inline-block;
+    margin: 0.8em 0 0.8em 1.5em;;
+    font-size:0.9em;
+    color: #ccc;
+}
+
+blockquote small:before {
+	content: '\2014 \00A0';
+}
+
+blockquote cite {
+    font-weight:bold;
+}
+
+blockquote cite a {
+	font-weight: normal;
+}
+
+dl {
+    margin: 1.6em 0;
+}
+
+dl dt {
+    float: left;
+    clear: left;
+    width: 180px;
+    margin-bottom: 1em;
+    overflow: hidden;
+    font-weight: bold;
+    text-align: right;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+dl dd {
+    margin: 0 0 1em 200px;
+}
+
+mark {
+    background-color: #f5f5f5;
+}
+
+pre {
+	width: 100%;
+	margin: 1.6em 0;
+	padding: 20px;
+	overflow: auto;
+	white-space: pre;
+	font-family: "Courier New", monospace, sans-serif;
+	background: #f5f5f5;
+
+	border: 1px solid #ddd;
+	-webkit-border-radius: 	5px;
+	-moz-border-radius: 	5px;
+	border-radius: 			5px;
+
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: 	border-box;
+	box-sizing: 		border-box;
+}
+
+/* 4. Sidebar */
+
+.blog-logo {
+	font-family: 'Abril Fatface', Georgia, serif;
+	font-size: 3em;
+	font-weight: normal;
+	line-height: 1em;
+	color: #fff;
+	-webkit-font-smoothing: antialiased;
+}
+
+.blog-logo a {
+	color: #fff;
+	text-decoration: none;
+}
+
+.blog-social {
+	margin-top: 30px;
+	font-size: 0.778em;
+}
+
+.blog-social p {
+	text-transform: uppercase;
+	letter-spacing: 0.02em;
+}
+
+.blog-social ul {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+
+.blog-social li {
+	float: left;
+	margin-right: 10px;
+}
+
+.blog-social li span.icon-stack {
+	font-size: 1.2em;
+}
+
+.clean-ul {
+	list-style-type: none;
+	padding-left: 10px;
+}
+
+.clean-ul a {
+	text-decoration: none;
+}
+
+/* 5. Footer */
+
+.site-footer {
+	font-size: 0.778em;
+	color: #888;
+}
+
+.site-footer a {
+	color: #444;
+}
+
+.site-footer a:hover {
+	color: #000;
+}
+
+.site-footer .copyright {
+	float: left;
+}
+
+.site-footer .rss-feed {
+	float: right;
+}
+
+/* 6. Media Queries */
+
+@media only screen and (max-width: 1023px) {
+	#sidebar {
+		position: relative;
+		top: 0;
+		width: 100%;
+		padding: 50px 5%;
+		text-align: center;
+	}
+
+	.blog-social, .blog-social ul { margin: 0 auto; text-align: center; }
+
+	.blog-social ul li {
+		float: none;
+		display: inline;
+	}
+
+	#content {
+		position: relative;
+		height: auto;
+	}
+
+	dl dt {
+	    float: none;
+	    width: 100;
+	    margin-bottom: 0;
+	    overflow: hidden;
+	    font-weight: bold;
+	    text-align: right;
+	    text-overflow: ellipsis;
+	    white-space: nowrap;
+	}
+
+	dl dd {
+	    margin: 0 0 1em 50px;
+	}
+
+	.site-footer {
+		text-align: center;
+	}
+
+	.site-footer .copyright, .site-footer .rss-feed {
+		float: none;
+	}
+
+	.site-footer .rss-feed {
+		margin-top: 30px;
+	}
+}
