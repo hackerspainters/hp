@@ -1,0 +1,25 @@
+{{ define "title" }}Past Events{{ end }}
+
+{{ define "content" }}
+
+<header class="post-header">
+	<h2 class="post-title">Past Events</h2>
+</header>
+
+	{{ range .Events }}
+	<article class="post tag-mots tag-responsive">
+		<header class="post-header">
+			<h3>{{ .Data.Name }}</h3>
+			<span class="post-meta">
+				<time datetime='{{ .Data.StartTime.Format "2006-1-2" }}'>{{ .Data.StartTime.Format "Mon, 2 Jan 2006 @ 15:04" }}</time>
+			</span>
+		</header>
+		<section class="post-excerpt">
+			<p>
+				{{ .Data.Description }}
+			</p>
+		</section>
+	</article>
+	{{ end }}
+
+{{ end }}

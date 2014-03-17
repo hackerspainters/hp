@@ -6,6 +6,8 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	"github.com/codegangsta/martini"
+
 	// TODO: begin using suite and assert from testify
 	//"github.com/stretchr/testify/suite"
 	//"github.com/stretchr/testify/assert"
@@ -24,14 +26,12 @@ func TestEventNextHandler(t *testing.T) {
 	db.RegisterAllIndexes()
 
 	// integration test on http requests to EventNextHandler
+	m := martini.Classic()
+	m.Get("/events/next/", EventNextHandler)
 
 	request, _ := http.NewRequest("GET", "/events/next/", nil)
 	response := httptest.NewRecorder()
 
-	EventNextHandler(response, request)
-
-	if response.Code != 302 {
-		t.Fatalf("Non-expected status code %v:\n\tbody: %v", "200", response.Code)
-	}
+	m.ServeHTTP(response, request)
 
 }
