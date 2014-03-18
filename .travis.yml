@@ -14,7 +14,7 @@ before_install:
   - mkdir -p $HOME/go/src/hp
   - cp -r $TRAVIS_BUILD_DIR $HOME/go/src/
   - export TRAVIS_BUILD_DIR=$HOME/go/src/hp
-  - cd $HOME/gopath/src/hp
+  - cd $HOME/go/src/hp
 
 script:
  - go test -v ./...
