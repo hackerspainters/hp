@@ -36,10 +36,11 @@ func EventListHandler(r render.Render) {
 	}
 
 	type templateData struct {
+		Context *conf.Context
 		Events []Event
 	}
 
-	data := templateData{results}
+	data := templateData{conf.DefaultContext(conf.Config), results}
 
 	r.HTML(200, "event_list", data)
 
@@ -61,10 +62,11 @@ func EventPastHandler(r render.Render) {
 	}
 
 	type templateData struct {
+		Context *conf.Context
 		Events []Event
 	}
 
-	data := templateData{results}
+	data := templateData{conf.DefaultContext(conf.Config), results}
 
 	r.HTML(200, "event_past", data)
 }
@@ -81,17 +83,12 @@ func EventNextHandler(r render.Render) {
 		panic(err)
 	}
 
-	//if err == mgo.ErrNotFound || len(results) == 0 {
-		//fmt.Println("No such object in db. Redirect")
-		//http.Redirect(w, r, "/404/", http.StatusFound)
-		//return
-	//}
-
 	type templateData struct {
+		Context *conf.Context
 		Events []Event
 	}
 
-	data := templateData{results}
+	data := templateData{conf.DefaultContext(conf.Config), results}
 
 	r.HTML(200, "event_next", data)
 

@@ -7,7 +7,6 @@ import (
 	"reflect"
 	"path"
 
-	"github.com/gorilla/mux"
 	"github.com/codegangsta/martini"
 	"github.com/codegangsta/martini-contrib/render"
 	"hp/event"
@@ -16,15 +15,6 @@ import (
 )
 
 func HomeHandler(r render.Render) {
-	r.HTML(200, "home", "")
-}
-
-func NotFoundHandler(w http.ResponseWriter, req *http.Request) {
-
-	var notfound = template.Must(template.ParseFiles(
-		path.Join(conf.Config.ProjectRoot, "templates/_base.html"),
-		path.Join(conf.Config.ProjectRoot, "templates/404.html"),
-	))
 
 	type templateData struct {
 		Context *conf.Context
@@ -32,10 +22,18 @@ func NotFoundHandler(w http.ResponseWriter, req *http.Request) {
 
 	data := templateData{conf.DefaultContext(conf.Config)}
 
-	if err := notfound.Execute(w, data); err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+	r.HTML(200, "home", data)
+}
+
+func NotFoundHandler(r render.Render) {
+
+	type templateData struct {
+		Context *conf.Context
 	}
 
+	data := templateData{conf.DefaultContext(conf.Config)}
+
+	r.HTML(200, "404", data)
 }
 
 func FacebookChannelHandler(w http.ResponseWriter, req *http.Request) {
@@ -53,14 +51,9 @@ func FacebookChannelHandler(w http.ResponseWriter, req *http.Request) {
 	fbchannel.Execute(w, data)
 }
 
-func FacebookLoginHandler(w http.ResponseWriter, req *http.Request) {
+func FacebookLoginHandler(r render.Render) {
 
 	// simple static page for user to click on fb connect button
-
-	var fblogin = template.Must(template.ParseFiles(
-		path.Join(conf.Config.ProjectRoot, "templates/_base.html"),
-		path.Join(conf.Config.ProjectRoot, "templates/facebook_login.html"),
-	))
 
 	type templateData struct {
 		Context *conf.Context
@@ -68,7 +61,7 @@ func FacebookLoginHandler(w http.ResponseWriter, req *http.Request) {
 
 	data := templateData{conf.DefaultContext(conf.Config)}
 
-	fblogin.Execute(w, data)
+	r.HTML(200, "facebook_login", data)
 
 }
 
@@ -84,10 +77,6 @@ func FacebookRedirectHandler(w http.ResponseWriter, req *http.Request) {
 
 }
 
-func handleFuncPrefix(r *mux.Router, s string, h func(http.ResponseWriter, *http.Request)) {
-	r.HandleFunc(conf.Config.HttpPrefix+s, h)
-}
-
 func main() {
 	fmt.Printf("Using config %s\n", conf.Path)
 	fmt.Printf("Using models:\n")
@@ -100,13 +89,6 @@ func main() {
 	db.Connect(conf.Config.DbHostString(), conf.Config.DbName)
 	db.RegisterAllIndexes()
 
-	// Routing with Gorilla Mux
-	r := mux.NewRouter()
-	r.StrictSlash(true)
-	handleFuncPrefix(r, "/404/", NotFoundHandler)
-	handleFuncPrefix(r, "/channel.html", FacebookChannelHandler)
-	handleFuncPrefix(r, "/facebook/login/", FacebookLoginHandler)
-
 	m := martini.Classic()
 
 	m.Use(martini.Static("static"))
@@ -118,16 +100,20 @@ func main() {
 		//IndentJSON: true, // Output human readable JSON
 	}))
 
+	m.NotFound(NotFoundHandler)
 	m.Get("/", HomeHandler)
-	m.Get("/events/", event.EventListHandler)
-	m.Get("/events/past/", event.EventPastHandler)
-	m.Get("/events/next/", event.EventNextHandler)
-	m.Get("/organise/", event.OrganiseHandler)
-	m.Get("/event/add/", event.EventAddHandler)
+	m.Get("/events", event.EventListHandler)
+	m.Get("/events/past", event.EventPastHandler)
+	m.Get("/events/next", event.EventNextHandler)
+	m.Get("/organise", event.OrganiseHandler)
+	m.Get("/event/add", event.EventAddHandler)
 
+	// Facebook related features
 	// one-off link that allows event owner to grab group-specific events set with group-only perms
-	m.Get("/events/grab/", event.EventGrabHandler)
-	m.Get("/events/import/", event.EventImportHandler)
+	m.Get("/facebook/login", FacebookLoginHandler)
+	m.Get("/events/grab", event.EventGrabHandler)
+	m.Get("/events/import", event.EventImportHandler)
+	m.Get("/channel.html", FacebookChannelHandler)
 
 	m.Run()
 

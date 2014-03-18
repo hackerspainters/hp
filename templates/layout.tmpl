@@ -32,8 +32,8 @@
 			window.fbAsyncInit = function() {
 				// init the FB JS SDK
 				FB.init({
-					appId 		: 'FacebookAppId',
-					channelUrl 	: 'FacebookChannelUrl',
+					appId 		: '{{ .Context.FacebookAppId }}',
+					channelUrl 	: '{{ .Context.FacebookChannelUrl }}',
 
 					//appId      : '521976014544775',                    // App ID from the app dashboard
 					//channelUrl : '//hackersandpainters.sg/channel.html', // Channel file for x-domain comms
