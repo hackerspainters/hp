@@ -5,8 +5,6 @@ import (
 	"fmt"
 	"os"
 	"path"
-
-	"bitbucket.org/kardianos/osext"
 )
 
 type config struct {
@@ -103,16 +101,15 @@ func init() {
 	Config.Debug = false
 	Config.TemplatePreCompile = true
 
-	var projRoot string
-	if ecp := os.Getenv("PROJ_CONFIG_PATH"); ecp != "" {
-		projRoot = ecp
-	} else {
-		exename, _ := osext.Executable()
-		projRoot = path.Dir(exename)
+
+	proj_path := os.Getenv("PROJ_PATH")
+	if (len(proj_path) == 0) {
+		fmt.Println("Please export PROJ_PATH=$(pwd) before you run the project.")
+		os.Exit(1)
 	}
 
-	Config.ProjectRoot = projRoot  // set ProjectRoot config which is used for template loading
-	Path = path.Join(projRoot, "config.json")
+	Config.ProjectRoot = proj_path  // set ProjectRoot config which is used for template loading
+	Path = path.Join(proj_path, "config.json")
 
 	file, err := os.Open(Path)
 	if err != nil {
