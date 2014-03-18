@@ -118,9 +118,10 @@ func EventGrabHandler(r render.Render) {
 
 }
 
-func EventImportHandler(w http.ResponseWriter, r *http.Request) {
+func EventImportHandler(res http.ResponseWriter, req *http.Request) {
 
-	decoder := json.NewDecoder(r.Body)
+	fmt.Println("Importing events from facebook")
+	decoder := json.NewDecoder(req.Body)
 
 	MyToken := facebook.AccessToken{}
 	err := decoder.Decode(&MyToken)
@@ -133,7 +134,7 @@ func EventImportHandler(w http.ResponseWriter, r *http.Request) {
 	updateEventDetails(event_ids, &MyToken)
 
 	// one-off implementation to also grab event details in the `General Hackers` group
-    generalhackers := facebook.GetGroupEvents(&MyToken, "314660778669731")
+	generalhackers := facebook.GetGroupEvents(&MyToken, "314660778669731")
 	generalhackers_ids := facebook.GetGroupEventIds(generalhackers)
 	updateEventDetails(generalhackers_ids, &MyToken)
 

@@ -9,6 +9,7 @@ import (
 
 	"github.com/codegangsta/martini"
 	"github.com/codegangsta/martini-contrib/render"
+	//"github.com/codegangsta/martini-contrib/binding"
 	"hp/event"
 	"hp/db"
 	"hp/conf"
@@ -111,9 +112,9 @@ func main() {
 	// Facebook related features
 	// one-off link that allows event owner to grab group-specific events set with group-only perms
 	m.Get("/facebook/login", FacebookLoginHandler)
-	m.Get("/events/grab", event.EventGrabHandler)
-	m.Get("/events/import", event.EventImportHandler)
 	m.Get("/channel.html", FacebookChannelHandler)
+	m.Get("/events/grab", event.EventGrabHandler)
+	m.Post("/events/import", event.EventImportHandler)
 
 	m.Run()
 

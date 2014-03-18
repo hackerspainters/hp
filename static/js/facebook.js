@@ -48,13 +48,17 @@ function getGroupEvents(fbuid, gid, token, expiresIn) {
 
 	FB.api('/'+gid+'?access_token='+token, function(response) {
 		if (response.owner.id == fbuid) {
+
+			data = JSON.stringify({token: token, expiresIn: expiresIn}),
+
 			$.ajax({
 				type: 'POST',
 				url: "/events/import/",
-				data: JSON.stringify({token: token, expiresIn: expiresIn}),
+				data: data,
 				dataType: 'json',
 				contentType: 'application/json'
 			});
+
 			FB.api('/'+gid+'/events?access_token='+token, function(response) {
 				for (var i=0; i<response.data.length; i++) {
 					getEvent(response.data[i].id, token)
