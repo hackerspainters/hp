@@ -78,6 +78,7 @@ func EventNextHandler(r render.Render) {
 	sort := "data.start_time"
 	var results []Event
 	err := db.Find(&Event{}, search).Sort(sort).Limit(2).All(&results)
+	fmt.Println(results)
 
 	if err != nil && err != mgo.ErrNotFound {
 		panic(err)
@@ -103,6 +104,14 @@ func OrganiseHandler(r render.Render) {
 	data := templateData{conf.DefaultContext(conf.Config)}
 
 	r.HTML(200, "organise", data)
+
+}
+
+// Register Event Attendee
+
+func RegisterEventAttendeeHandler(res http.ResponseWriter, req *http.Request) {
+
+	fmt.Println("Register event attendee")
 
 }
 

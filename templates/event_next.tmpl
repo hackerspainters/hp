@@ -6,6 +6,7 @@
 
 	{{ range .Events }}
 	<section class="post-excerpt">
+
 		<h3>{{ .Data.Name }}</h3>
 		<span class="post-meta">
 			<time datetime='{{ .Data.StartTime.Format "2006-1-2" }}'>{{ .Data.StartTime.Format "Mon, 2 Jan 2006 @ 15:04" }}</time>
@@ -14,8 +15,18 @@
 		<span class="post-meta">
 			Venue: {{ .Data.Location }}
 		</span>
+
+		<div class="row">
+		<a  href="#" id="express" 
+			class="btn btn-primary btn-lg" 
+			style="margin-left: 15px; margin-top: 20px;" 
+			role="button" onclick="RegisterAttendee('{{ .Eid }}')">Express Entry</a>
+		</div>
+
+		<br /> 
+
 		<p>
-			{{ .Data.Description }}
+		{{ .Data.Description }}
 		</p>
 	</section>
 	{{ end }}

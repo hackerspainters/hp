@@ -6,10 +6,32 @@ function Login() {
 			// we have send them to the backend with an ajax call and let the
 			// golang backend execute the event list parsing and dump the results into
 			// mongodb
-
 			getUserInfo();
 		} else {
 			console.log('User cancelled login or did not fully authorize.');
+		}
+	},{scope: 'user_events, email'});
+}
+
+function RegisterAttendee(eid) {
+	FB.login(function(response) {
+		if (response.authResponse) {
+			FB.api('/me', function(resp) {
+				console.log(2222, resp)
+				data = JSON.stringify({
+					eid: eid, fbuid: resp.id, first_name: resp.first_name, last_name: resp.last_name, email: resp.email
+				})
+				console.log(3333, data)
+				$.ajax({
+					type: 'POST',
+					url: "/events/register/",
+					data: data,
+					dataType: 'json',
+					contentType: 'application/json'
+				});
+			});
+		} else {
+			console.log('Event registration failed.');
 		}
 	},{scope: 'user_events, email'});
 }
@@ -23,12 +45,16 @@ function getUserInfo() {
 		str +="<b>Email:</b> "+response.email+"<br>";
 		str +="<input type='button' value='Get Photo' onclick='getPhoto();'/>";
 		str +="<input type='button' value='Logout' onclick='Logout();'/>";
-		document.getElementById("status").innerHTML=str;
+		var status = document.getElementById("status"); 
+		if (status != null) {
+			document.getElementById("status").innerHTML=str;
+		}
 	});
 }
 
 function displayUser() {
 	FB.api('/me', function(response) {
+		$("#express").text("Attending as "+ response.first_name)
 		return response
 	});
 }

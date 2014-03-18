@@ -8,6 +8,41 @@ import (
 	"hp/db"
 )
 
+type Attendee struct {
+	ID           bson.ObjectId `bson:"_id,omitempty"`
+	Eid          string
+	Fbuid        string
+	FirstName    string
+	LastName     string
+	Email        string
+    Timestamp    time.Time
+}
+
+func NewAttendee() *Attendee {
+	return &Attendee{
+		Timestamp: time.Now(),
+	}
+}
+
+// implementations for the Attendee struct.
+
+func (a *Attendee) Collection() string { return "attendees" }
+
+func (a *Attendee) Indexes() [][]string {
+	return [][]string{
+		[]string{"timestamp"},
+	}
+}
+
+func (a *Attendee) PreSave() {}
+
+func (a *Attendee) Unique() bson.M {
+	if len(a.ID) > 0 {
+		return bson.M{"_id": a.ID}
+	}
+	return bson.M{"eid": a.Eid}
+}
+
 type Event struct {
 	ID           bson.ObjectId `bson:"_id,omitempty"`
 	Eid          string
@@ -50,6 +85,7 @@ func NewEvent() *Event {
 	}
 }
 
+
 // implementations for the Event struct.
 
 func (e *Event) Collection() string { return "events" }
@@ -73,5 +109,6 @@ func (e *Event) Unique() bson.M {
 
 func init() {
 	db.Register(&Event{})
+	db.Register(&Attendee{})
 }
 
