@@ -9,11 +9,11 @@ go:
  - tip
 
 before_install:
-  - export GOPATH=$HOME/gopath:$GOPATH
-  - export PROJ_CONFIG_PATH=$HOME/gopath/src/hp
-  - mkdir -p $HOME/gopath/src/hp
-  - cp -r $TRAVIS_BUILD_DIR $HOME/gopath/src/
-  - export TRAVIS_BUILD_DIR=$HOME/gopath/src/hp
+  - export GOPATH=$HOME/go:$GOPATH
+  - export PROJ_PATH=$HOME/go/src/hp
+  - mkdir -p $HOME/go/src/hp
+  - cp -r $TRAVIS_BUILD_DIR $HOME/go/src/
+  - export TRAVIS_BUILD_DIR=$HOME/go/src/hp
   - cd $HOME/gopath/src/hp
 
 script:
