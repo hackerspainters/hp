@@ -96,9 +96,11 @@ func EventNextHandler(r render.Render) {
 
 func OrganiseHandler(r render.Render) {
 
-	type templateData struct {}
+	type templateData struct {
+		Context *conf.Context
+	}
 
-	data := templateData{}
+	data := templateData{conf.DefaultContext(conf.Config)}
 
 	r.HTML(200, "organise", data)
 
