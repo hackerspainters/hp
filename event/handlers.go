@@ -8,6 +8,7 @@ import (
 	"html/template"
 	"path"
 
+	"github.com/codegangsta/martini"
 	"github.com/codegangsta/martini-contrib/render"
 	"labix.org/v2/mgo"
 	"labix.org/v2/mgo/bson"
@@ -109,9 +110,30 @@ func OrganiseHandler(r render.Render) {
 
 // Register Event Attendee
 
-func RegisterEventAttendeeHandler(res http.ResponseWriter, req *http.Request) {
+func RegisterEventAttendeeHandler(a Attendee, mdb *mgo.Database, res http.ResponseWriter, req *http.Request) {
 
 	fmt.Println("Register event attendee")
+
+	mdb.C("attendees").Upsert(bson.M{"eid": a.Eid, "fbuid": a.Fbuid}, &a)
+
+}
+
+func ShowEventAttendees(params martini.Params, mdb *mgo.Database, r render.Render) {
+
+	fmt.Println("Show event attendees")
+
+	var attendees []Attendee
+	fmt.Println(params["eid"])
+	mdb.C("attendees").Find(bson.M{"eid": params["eid"]}).All(&attendees)
+
+	type templateData struct {
+		Context *conf.Context
+		Attendees []Attendee
+	}
+
+	data := templateData{conf.DefaultContext(conf.Config), attendees}
+
+	r.HTML(200, "event_attendees", data)
 
 }
 

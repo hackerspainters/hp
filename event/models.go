@@ -11,10 +11,10 @@ import (
 type Attendee struct {
 	ID           bson.ObjectId `bson:"_id,omitempty"`
 	Eid          string
+	Email        string
 	Fbuid        string
 	FirstName    string
 	LastName     string
-	Email        string
     Timestamp    time.Time
 }
 

@@ -9,7 +9,9 @@ import (
 
 	"github.com/codegangsta/martini"
 	"github.com/codegangsta/martini-contrib/render"
-	//"github.com/codegangsta/martini-contrib/binding"
+	"github.com/codegangsta/martini-contrib/binding"
+	"labix.org/v2/mgo"
+
 	"hp/event"
 	"hp/db"
 	"hp/conf"
@@ -78,6 +80,21 @@ func FacebookRedirectHandler(w http.ResponseWriter, req *http.Request) {
 
 }
 
+// DB Returns a martini.Handler
+func DB(dbName string) martini.Handler {
+    session, err := mgo.Dial("mongodb://localhost")
+    if err != nil {
+        panic(err)
+    }
+
+    return func(c martini.Context) {
+        s := session.Clone()
+        c.Map(s.DB(dbName))
+        defer s.Close()
+        c.Next()
+    }
+}
+
 func main() {
 	fmt.Printf("Using config %s\n", conf.Path)
 	fmt.Printf("Using models:\n")
@@ -93,6 +110,7 @@ func main() {
 	m := martini.Classic()
 
 	m.Use(martini.Static("static"))
+	m.Use(DB(conf.Config.DbName))
 
 	m.Use(render.Renderer(render.Options{
 		Directory: "templates",
@@ -115,6 +133,10 @@ func main() {
 	m.Get("/channel.html", FacebookChannelHandler)
 	m.Get("/events/grab", event.EventGrabHandler)
 	m.Post("/events/import", event.EventImportHandler)
+
+	m.Post("/events/register", binding.Bind(event.Attendee{}), event.RegisterEventAttendeeHandler)
+	
+	m.Get("/event/:eid", event.ShowEventAttendees)
 
 	m.Run()
 

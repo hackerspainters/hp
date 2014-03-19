@@ -17,11 +17,9 @@ function RegisterAttendee(eid) {
 	FB.login(function(response) {
 		if (response.authResponse) {
 			FB.api('/me', function(resp) {
-				console.log(2222, resp)
 				data = JSON.stringify({
-					eid: eid, fbuid: resp.id, first_name: resp.first_name, last_name: resp.last_name, email: resp.email
+					eid: eid, fbuid: resp.id, firstname: resp.first_name, lastname: resp.last_name, email: resp.email
 				})
-				console.log(3333, data)
 				$.ajax({
 					type: 'POST',
 					url: "/events/register/",

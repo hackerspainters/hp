@@ -1,0 +1,15 @@
+
+<header class="post-header">
+	<h2 class="post-title">Attendees</h2>
+</header>
+
+{{ range .Attendees }}
+<article class="post tag-mots tag-responsive">
+	<header class="post-header">
+		<h3>{{ .FirstName }} {{ .LastName }}</h3>
+		<span class="post-meta">
+			{{ .Email }}
+		</span>
+	</section>
+</article>
+{{ end }}
