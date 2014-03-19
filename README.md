@@ -3,8 +3,10 @@ Site for hackersandpainters.sg
 
 [![Build Status](https://drone.io/github.com/hackerspainters/hp/status.png)](https://drone.io/github.com/hackerspainters/hp/latest)
 
-Getting started: set up your development environment to contribute
+Getting started: Dev environment
 ==
+
+You will also need to install mongodb.  This project uses the mgo library to persist data.
 
 ```bash
 # Prepare directory and source code
