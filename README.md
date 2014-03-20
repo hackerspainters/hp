@@ -30,3 +30,10 @@ go run main.go
 
 # Then, browse to http://localhost:3000
 ```
+
+Contributions and Deployment
+==
+
+Contributions are more than welcome and pull requests should be made to the `develop` branch.  Contributors should write unit tests.
+
+Deployment is completely automated in a continuous deployment set-up with [drone.io](https://drone.io/github.com/hackerspainters/hp) on `master` branch.
