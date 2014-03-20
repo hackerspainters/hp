@@ -38,7 +38,7 @@ Contributions are more than welcome and pull requests should be made to the `dev
 
 Deployment is completely automated in a continuous deployment set-up with [drone.io](https://drone.io/github.com/hackerspainters/hp) on `master` branch.
 
-Example deploy script used for such a deployment
+Example deployment script
 ==
 
 ```bash
